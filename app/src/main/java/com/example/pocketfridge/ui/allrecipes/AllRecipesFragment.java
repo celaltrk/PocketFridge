@@ -1,4 +1,4 @@
-package com.example.pocketfridge.ui.notifications;
+package com.example.pocketfridge.ui.allrecipes;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,24 +12,23 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.pocketfridge.R;
-import com.example.pocketfridge.databinding.FragmentNotificationsBinding;
+import com.example.pocketfridge.databinding.FragmentAllrecipesBinding;
 
-public class NotificationsFragment extends Fragment {
+public class AllRecipesFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
-    private FragmentNotificationsBinding binding;
+    private AllRecipesViewModel allRecipesViewModel;
+    private FragmentAllrecipesBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        allRecipesViewModel =
+                new ViewModelProvider(this).get(AllRecipesViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentAllrecipesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textAllrecipes;
+        allRecipesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

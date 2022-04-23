@@ -1,16 +1,15 @@
-package com.example.pocketfridge.ui.notifications;
+package com.example.pocketfridge.ui.shoppinglist;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
+public class ShoppingListViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public ShoppingListViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
     }
 
     public LiveData<String> getText() {

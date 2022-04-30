@@ -1,0 +1,39 @@
+package com.example.pocketfridge.fridgeItems;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
+public class Product implements Comparable<Product> {
+    Calendar expDate;
+    String name;
+    String category;
+    String type;
+    final String dmy = "dd/MM/yyyy";
+    public Product(String name, String category, String type, Calendar expDate) {
+        this.expDate = expDate;
+        this.name = name;
+        this.type = type;
+        this.category = category;
+        if (expDate == null)
+            this.expDate = Calendar.getInstance();
+    }
+    public String getExpDate() {
+        SimpleDateFormat dateFormat= new SimpleDateFormat(dmy, Locale.UK);
+        return "Expiration Date: " + dateFormat.format(expDate.getTime());
+    }
+    public void setExpDate(Calendar date) {
+        expDate = date;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    @Override
+    public int compareTo(Product product) {
+        return this.expDate.compareTo(product.expDate);
+    }
+    @Override
+    public String toString() {
+        return name + "\n" + getExpDate();
+    }
+}

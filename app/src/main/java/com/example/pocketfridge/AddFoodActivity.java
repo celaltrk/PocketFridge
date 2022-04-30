@@ -19,6 +19,7 @@ import com.example.pocketfridge.fridgeItems.Product;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class AddFoodActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -118,7 +119,6 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
         expDateEditText.setText(dateFormat.format(cal.getTime()));
     }
     public void onClick(View view) {
-        added.add(new Product(selectedName,selectedCategory,selectedType,selectedDate));
         selectedName = nameInput.getText().toString();
         Toast.makeText(getApplicationContext(), selectedName + " added", Toast.LENGTH_SHORT).show();
 
@@ -136,6 +136,8 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
         Toast.makeText(getApplicationContext(), worked + "", Toast.LENGTH_SHORT).show();
 
     }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

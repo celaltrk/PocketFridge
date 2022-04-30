@@ -10,8 +10,11 @@ import androidx.annotation.Nullable;
 
 import com.example.pocketfridge.fridgeItems.Product;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -25,6 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String createTable = "CREATE TABLE ProductTable (Name TEXT, " +
                 "IsExpirable BOOL, " +
                 "ExpDate TEXT, " +
+                "Category TEXT," +
                 "Type TEXT , " +
                 "IsLiquid BOOL, " +
                 "Quantity INTEGER)";
@@ -44,6 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("Name", product.getName());
         cv.put("IsExpirable", product.isExpirable());
         cv.put("ExpDate", product.getExpDate());
+        cv.put("Category", product.getCategory());
         cv.put("Type", product.getType());
         cv.put("isLiquid", product.isLiquid());
         cv.put("Quantity", product.getQuantity());
@@ -53,9 +58,9 @@ public class DBHelper extends SQLiteOpenHelper {
         else return true;
     }
 
-    public List<Product> getAll(){
+    public ArrayList<Product> getAll()  {
 
-    List<Product> items = new ArrayList<>();
+    ArrayList<Product> items = new ArrayList<>();
 
     String queryStr = "SELECT * FROM ProductTable";
     SQLiteDatabase db = this.getReadableDatabase();
@@ -67,12 +72,32 @@ public class DBHelper extends SQLiteOpenHelper {
 
             String productName = cursor.getString(0);
             boolean productExpirable = cursor.getInt(1) == 1 ? true : false;
+            String productExpDate = cursor.getString(2);
+            String productCategory = cursor.getString(3);
+            String productType = cursor.getString(4);
+            boolean productLiquid = cursor.getInt(5) == 1 ? true : false;
+            int productQuantity = cursor.getInt(6);
 
-        }while(cursor.moveToFirst());
+            Product pro;
+            try{
+                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(productExpDate);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(date);
+                pro = new Product(productName, productCategory, productType,cal);
+            }
+            catch (Exception e){
+                pro = new Product(productName, productCategory, productType,null);
+            }
+
+            items.add(pro);
+
+        }while(cursor.moveToNext());
     }
     else{
-
+        //list empty or ended
     }
+    cursor.close();
+    db.close();
     return items;
     }
 }

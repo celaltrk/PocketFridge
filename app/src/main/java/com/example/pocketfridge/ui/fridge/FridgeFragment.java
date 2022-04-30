@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pocketfridge.AddFoodActivity;
+import com.example.pocketfridge.DBHelper;
 import com.example.pocketfridge.MainActivity;
 import com.example.pocketfridge.R;
 import com.example.pocketfridge.adapter.ItemAdapter;
@@ -48,6 +50,8 @@ public class FridgeFragment extends Fragment {
     public void createFridge() {
         ArrayList<Product> products = new ArrayList<>();
         // TODO FETCH PRODUCTS FROM ADDFOODACTIVITY
+        DBHelper dbhelper = new DBHelper(getActivity());
+        ArrayList<Product> items = dbhelper.getAll();
         products.add(new Product("sample1","sample","sample", Calendar.getInstance()));
         products.add(new Product("sample2","sample","sample", Calendar.getInstance()));
         fridgeRecyclerView = (RecyclerView) getView().findViewById((R.id.fridge_recyclerView));

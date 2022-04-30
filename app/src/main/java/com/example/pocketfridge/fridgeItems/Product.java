@@ -2,6 +2,7 @@ package com.example.pocketfridge.fridgeItems;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class Product implements Comparable<Product> {
@@ -9,8 +10,10 @@ public class Product implements Comparable<Product> {
     String name;
     String category;
     String type;
+    SimpleDateFormat dateFormat;
     final String dmy = "dd/MM/yyyy";
     public Product(String name, String category, String type, Calendar expDate) {
+        dateFormat= new SimpleDateFormat(dmy, Locale.UK);
         this.expDate = expDate;
         this.name = name;
         this.type = type;
@@ -24,9 +27,13 @@ public class Product implements Comparable<Product> {
     }
 
     public String getExpDate() {
-        SimpleDateFormat dateFormat= new SimpleDateFormat(dmy, Locale.UK);
         return "Expiration Date: " + dateFormat.format(expDate.getTime());
     }
+
+    public Calendar getExpDateCalendar(){
+        return expDate;
+    }
+
     public void setExpDate(Calendar date) {
         expDate = date;
     }
@@ -44,11 +51,11 @@ public class Product implements Comparable<Product> {
 
 
     public Boolean isExpirable() {
-        return null;
+        return true;
     }
 
     public String getType() {
-        return null;
+        return type;
     }
 
     public Boolean isLiquid() {
@@ -57,5 +64,9 @@ public class Product implements Comparable<Product> {
 
     public int getQuantity() {
         return 0;
+    }
+
+    public String getCategory() {
+        return category;
     }
 }

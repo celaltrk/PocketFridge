@@ -1,5 +1,6 @@
 package com.example.pocketfridge.ui.fridge;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Context;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +29,7 @@ import com.example.pocketfridge.fridgeItems.Product;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 public class FridgeFragment extends Fragment {
     private FridgeViewModel fridgeViewModel;
@@ -51,7 +55,8 @@ public class FridgeFragment extends Fragment {
         ArrayList<Product> products = new ArrayList<>();
         // TODO FETCH PRODUCTS FROM ADDFOODACTIVITY
         DBHelper dbhelper = new DBHelper(getActivity());
-        ArrayList<Product> items = dbhelper.getAll();
+        products = dbhelper.getAll();
+        Collections.sort(products);
         products.add(new Product("sample1","sample","sample", Calendar.getInstance()));
         products.add(new Product("sample2","sample","sample", Calendar.getInstance()));
         fridgeRecyclerView = (RecyclerView) getView().findViewById((R.id.fridge_recyclerView));

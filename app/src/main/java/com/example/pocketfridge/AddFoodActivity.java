@@ -30,10 +30,10 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
     ArrayList<String> types;
     EditText expDateEditText;
     String selectedType, selectedCategory, selectedName;
-    Calendar selectedDate;
+    String dateStr;
     Button addProduct;
     ArrayList<Product> added;
-    final Calendar cal = Calendar.getInstance();
+    Calendar cal = Calendar.getInstance();
     final String dmy = "dd/MM/yyyy";
     final String[][] table = {
             {"Categories","Select Category First"},
@@ -117,15 +117,18 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
     private void updateLabel(){
         SimpleDateFormat dateFormat=new SimpleDateFormat(dmy, Locale.UK);
         expDateEditText.setText(dateFormat.format(cal.getTime()));
+        dateStr = dateFormat.format(cal.getTime());
+        Toast.makeText(getApplicationContext(), dateStr + " added", Toast.LENGTH_SHORT).show();
     }
     public void onClick(View view) {
         selectedName = nameInput.getText().toString();
         Toast.makeText(getApplicationContext(), selectedName + " added", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), dateStr + "  date", Toast.LENGTH_SHORT).show();
 
         Product product;
         try{
-            product = new Product(selectedName,selectedCategory,selectedType,selectedDate);
-            Toast.makeText(getApplicationContext(), "Succesfully created", Toast.LENGTH_SHORT).show();
+            product = new Product(selectedName,selectedCategory,selectedType,cal);
+            Toast.makeText(getApplicationContext(), "Successfully created", Toast.LENGTH_SHORT).show();
         }
         catch (Exception e){
             Toast.makeText(getApplicationContext(), "Error Creating", Toast.LENGTH_SHORT).show();
@@ -136,8 +139,6 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
         Toast.makeText(getApplicationContext(), worked + "", Toast.LENGTH_SHORT).show();
 
     }
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

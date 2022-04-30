@@ -17,6 +17,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.example.pocketfridge.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton addManuallyButton;
     private ActivityMainBinding binding;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize objects
         addManuallyButton = (FloatingActionButton) findViewById(R.id.addManuallyButton);
+
     }
     public void addManuallyOnClick(View view) {
         Toast.makeText(getApplicationContext(), "Add Food Manually", Toast.LENGTH_SHORT).show();

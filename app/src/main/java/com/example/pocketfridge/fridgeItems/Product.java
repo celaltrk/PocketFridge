@@ -27,7 +27,7 @@ public class Product implements Comparable<Product> {
     }
 
     public String getExpDate() {
-        return "Expiration Date: " + dateFormat.format(expDate.getTime());
+        return dateFormat.format(expDate.getTime());
     }
 
     public Calendar getExpDateCalendar(){
@@ -46,7 +46,7 @@ public class Product implements Comparable<Product> {
     }
     @Override
     public String toString() {
-        return name + "\n" + getExpDate();
+        return name + "\nExpiration Date: " + getExpDate();
     }
 
 

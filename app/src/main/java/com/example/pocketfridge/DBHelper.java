@@ -1,10 +1,12 @@
 package com.example.pocketfridge;
 
+import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -76,16 +79,17 @@ public class DBHelper extends SQLiteOpenHelper {
             String productCategory = cursor.getString(3);
             String productType = cursor.getString(4);
             boolean productLiquid = cursor.getInt(5) == 1 ? true : false;
-            int productQuantity = cursor.getInt(6);
+
 
             Product pro;
             try{
-                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(productExpDate);
                 Calendar cal = Calendar.getInstance();
-                cal.setTime(date);
+                cal.set(Calendar.YEAR, Integer.parseInt(productExpDate.substring(6,10)));
+                cal.set(Calendar.MONTH,Integer.parseInt(productExpDate.substring(3,5))-1);
+                cal.set(Calendar.DAY_OF_MONTH,Integer.parseInt(productExpDate.substring(0,2)));
                 pro = new Product(productName, productCategory, productType,cal);
             }
-            catch (Exception e){
+            catch (NumberFormatException e) {
                 pro = new Product(productName, productCategory, productType,null);
             }
 

@@ -18,6 +18,11 @@ public class Product implements Comparable<Product> {
         if (expDate == null)
             this.expDate = Calendar.getInstance();
     }
+
+    public String getName() {
+        return this.name;
+    }
+
     public String getExpDate() {
         SimpleDateFormat dateFormat= new SimpleDateFormat(dmy, Locale.UK);
         return "Expiration Date: " + dateFormat.format(expDate.getTime());
@@ -35,5 +40,22 @@ public class Product implements Comparable<Product> {
     @Override
     public String toString() {
         return name + "\n" + getExpDate();
+    }
+
+
+    public Boolean isExpirable() {
+        return null;
+    }
+
+    public String getType() {
+        return null;
+    }
+
+    public Boolean isLiquid() {
+        return null;
+    }
+
+    public int getQuantity() {
+        return 0;
     }
 }

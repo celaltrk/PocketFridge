@@ -121,6 +121,20 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
         added.add(new Product(selectedName,selectedCategory,selectedType,selectedDate));
         selectedName = nameInput.getText().toString();
         Toast.makeText(getApplicationContext(), selectedName + " added", Toast.LENGTH_SHORT).show();
+
+        Product product;
+        try{
+            product = new Product(selectedName,selectedCategory,selectedType,selectedDate);
+            Toast.makeText(getApplicationContext(), "Succesfully created", Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e){
+            Toast.makeText(getApplicationContext(), "Error Creating", Toast.LENGTH_SHORT).show();
+            product = new Product("", "", "", null);
+        }
+        DBHelper dbhelper = new DBHelper(AddFoodActivity.this);
+        boolean worked = dbhelper.addOne(product);
+        Toast.makeText(getApplicationContext(), worked + "", Toast.LENGTH_SHORT).show();
+
     }
     @Override
     protected void onDestroy() {

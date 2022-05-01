@@ -23,17 +23,9 @@ public class ShoppingListFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         shoppingListViewModel =
                 new ViewModelProvider(this).get(ShoppingListViewModel.class);
-
         binding = FragmentShoppinglistBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textShoppinglist;
-        shoppingListViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 

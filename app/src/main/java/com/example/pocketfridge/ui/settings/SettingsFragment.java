@@ -1,5 +1,6 @@
 package com.example.pocketfridge.ui.settings;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.pocketfridge.AddShoppingListActivity;
+import com.example.pocketfridge.SettingsActivity;
 import com.example.pocketfridge.databinding.FragmentSettingsBinding;
 import com.example.pocketfridge.ui.settings.SettingsViewModel;
 
@@ -27,14 +30,6 @@ public class SettingsFragment extends Fragment {
 
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        final TextView textView = binding.textSettings;
-        settingsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 
@@ -42,5 +37,12 @@ public class SettingsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this.getActivity(), SettingsActivity.class);
+        startActivity(intent);
     }
 }

@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/addProduct"
+    android:id="@+id/addProductShoppingList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddFoodActivity">
+    tools:context=".AddShoppingListActivity">
 
     <EditText
-        android:id="@+id/nameInput"
+        android:id="@+id/nameInputSL"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/categoryInput"
+        android:id="@+id/categoryInputSL"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -37,10 +37,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.424"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameInput" />
+        app:layout_constraintTop_toBottomOf="@+id/nameInputSL" />
 
     <Spinner
-        android:id="@+id/typeInput"
+        android:id="@+id/typeInputSL"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -49,31 +49,17 @@
         android:background="@drawable/border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoryInput" />
-
-    <EditText
-        android:id="@+id/expDateEditText"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="Expiration Date"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/typeInput" />
+        app:layout_constraintTop_toBottomOf="@+id/categoryInputSL" />
 
     <Button
-        android:id="@+id/addFoodFR"
+        android:id="@+id/addFoodActivitySL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onClick"
+        android:onClick="onClickAddFoodActivitySL"
         android:text="ADD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expDateEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/typeInputSL" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

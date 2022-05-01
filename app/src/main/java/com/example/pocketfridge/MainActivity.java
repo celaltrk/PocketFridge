@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.pocketfridge.adapter.ItemAdapter;
-import com.example.pocketfridge.fridgeItems.Product;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -16,8 +14,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.example.pocketfridge.databinding.ActivityMainBinding;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton addManuallyButton;
@@ -40,12 +36,17 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         // Initialize objects
-        addManuallyButton = (FloatingActionButton) findViewById(R.id.addManuallyButton);
+        addManuallyButton = (FloatingActionButton) findViewById(R.id.addProductSL);
 
     }
     public void addManuallyOnClick(View view) {
         Toast.makeText(getApplicationContext(), "Add Food Manually", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, AddFoodActivity.class);
+        startActivity(intent);
+    }
+    public void addSLOnClick(View view) {
+        Toast.makeText(getApplicationContext(), "Add Shopping List", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, AddShoppingListActivity.class);
         startActivity(intent);
     }
 

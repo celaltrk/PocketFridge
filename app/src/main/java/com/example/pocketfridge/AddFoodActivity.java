@@ -3,23 +3,21 @@ package com.example.pocketfridge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.fridgeItems.Product;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 public class AddFoodActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -31,8 +29,6 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
     EditText expDateEditText;
     String selectedType, selectedCategory, selectedName;
     String dateStr;
-    Button addProduct;
-    ArrayList<Product> added;
     Calendar cal = Calendar.getInstance();
     final String dmy = "dd/MM/yyyy";
     final String[][] table = {
@@ -49,7 +45,6 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
         nameInput = (EditText) findViewById(R.id.nameInput);
         categorySpinner = (Spinner) findViewById(R.id.categoryInput);
         typeSpinner = (Spinner) findViewById(R.id.typeInput);
-        added = new ArrayList<Product>();
         createCategories();
         datePick();
     }
@@ -138,10 +133,5 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
         boolean worked = dbhelper.addOne(product);
         Toast.makeText(getApplicationContext(), worked + "", Toast.LENGTH_SHORT).show();
 
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //TODO PASS PRODUCTS ARRAYLIST TO FRIDGE
     }
 }

@@ -1,4 +1,4 @@
-package com.example.pocketfridge;
+package com.example.pocketfridge.data;
 
 import android.app.Application;
 import android.content.ContentValues;
@@ -12,11 +12,9 @@ import androidx.annotation.Nullable;
 
 import com.example.pocketfridge.fridgeItems.Product;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -56,31 +54,26 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("isLiquid", product.isLiquid());
         cv.put("Quantity", product.getQuantity());
 
-       long insert = db.insert("ProductTable", null, cv);
+        long insert = db.insert("ProductTable", null, cv);
         if(insert < 0) return false;
         else return true;
     }
 
-    public ArrayList<Product> getAll()  {
-
+    public ArrayList<Product> getAll() {
     ArrayList<Product> items = new ArrayList<>();
-
     String queryStr = "SELECT * FROM ProductTable";
     SQLiteDatabase db = this.getReadableDatabase();
     Cursor cursor = db.rawQuery(queryStr,null);
 
-    if (cursor.moveToFirst()){
+    if (cursor.moveToFirst()) {
 
-        do{
-
+        do {
             String productName = cursor.getString(0);
             boolean productExpirable = cursor.getInt(1) == 1 ? true : false;
             String productExpDate = cursor.getString(2);
             String productCategory = cursor.getString(3);
             String productType = cursor.getString(4);
             boolean productLiquid = cursor.getInt(5) == 1 ? true : false;
-
-
             Product pro;
             try{
                 Calendar cal = Calendar.getInstance();
@@ -92,10 +85,10 @@ public class DBHelper extends SQLiteOpenHelper {
             catch (NumberFormatException e) {
                 pro = new Product(productName, productCategory, productType,null);
             }
-
             items.add(pro);
 
-        }while(cursor.moveToNext());
+        }
+        while(cursor.moveToNext());
     }
     else{
         //list empty or ended

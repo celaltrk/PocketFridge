@@ -130,7 +130,7 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
             product = new Product("", "", "", null);
         }
         DBHelper dbhelper = new DBHelper(AddFoodActivity.this);
-        boolean worked = dbhelper.addOne(product);
+        boolean worked = dbhelper.addToList(product);
         Toast.makeText(getApplicationContext(), worked + "", Toast.LENGTH_SHORT).show();
 
     }

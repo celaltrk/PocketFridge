@@ -80,5 +80,18 @@ public class AddShoppingListActivity extends AppCompatActivity implements Adapte
     public void onClickAddFoodActivitySL(View view) {
         selectedName = nameInput.getText().toString();
         Toast.makeText(getApplicationContext(), selectedName + " added", Toast.LENGTH_SHORT).show();
+
+        Product product;
+        try{
+            product = new Product(selectedName,selectedCategory,selectedType,null);
+            Toast.makeText(getApplicationContext(), "Successfully created", Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e){
+            Toast.makeText(getApplicationContext(), "Error Creating", Toast.LENGTH_SHORT).show();
+            product = new Product("", "", "", null);
+        }
+        DBHelper dbhelper = new DBHelper(AddShoppingListActivity.this);
+        boolean worked = dbhelper.addToList(product);
+        Toast.makeText(getApplicationContext(), worked + "", Toast.LENGTH_SHORT).show();
     }
 }

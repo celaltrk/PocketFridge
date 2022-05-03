@@ -43,7 +43,7 @@ public class FridgeFragment extends Fragment {
     }
     public void createFridge() {
         DBHelper dbhelper = new DBHelper(getActivity());
-        ArrayList<Product> products = dbhelper.getAll();
+        ArrayList<Product> products = dbhelper.getAll_Fridge();
         Collections.sort(products);
         fridgeRecyclerView = (RecyclerView) getView().findViewById((R.id.fridge_recyclerView));
         ItemAdapter adapter = new ItemAdapter(products);

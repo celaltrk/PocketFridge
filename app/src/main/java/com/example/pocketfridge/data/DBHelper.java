@@ -20,8 +20,11 @@ import java.util.Locale;
 
 public class DBHelper extends SQLiteOpenHelper {
 
+    Calendar cal;
+    SimpleDateFormat dateFormat;
     public DBHelper(@Nullable Context context) {
         super(context, "products.db", null, 1);
+        dateFormat= new SimpleDateFormat("dd/MM/yyyy", Locale.UK);
     }
 
     @Override
@@ -35,6 +38,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 "Quantity INTEGER)";
 
         db.execSQL(createTable);
+
+        String createListDB = "CREATE TABLE Shopping_List (" +
+                "Name TEXT," +
+                "Category TEXT," +
+                "Type TEXT , " +
+                "addingDate TEXT, " +
+                "isBought INTEGER)" ;
+
+        db.execSQL(createListDB);
     }
 
     @Override
@@ -59,7 +71,21 @@ public class DBHelper extends SQLiteOpenHelper {
         else return true;
     }
 
-    public ArrayList<Product> getAll() {
+    public boolean addToList(Product product){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put("Name", product.getName());
+        String strDate=  dateFormat.format(cal.getTime());
+        cv.put("addingDate", strDate);
+        cv.put("isBought" , 0);
+
+        long insert = db.insert("Shopping_List", null, cv);
+        if(insert < 0) return false;
+        else return true;
+    }
+
+    public ArrayList<Product> getAll_Fridge() {
     ArrayList<Product> items = new ArrayList<>();
     String queryStr = "SELECT * FROM ProductTable";
     SQLiteDatabase db = this.getReadableDatabase();
@@ -96,5 +122,34 @@ public class DBHelper extends SQLiteOpenHelper {
     cursor.close();
     db.close();
     return items;
+    }
+
+    public ArrayList<Product> getAll_ShoppingList() {
+        ArrayList<Product> shopList = new ArrayList<>();
+        String queryStr = "SELECT * FROM Shopping_List";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryStr,null);
+
+        if (cursor.moveToFirst()) {
+
+            do {
+                String productName = cursor.getString(0);
+                String productCategory = cursor.getString(1);
+                String productType = cursor.getString(2);
+
+
+                Product pro = new Product(productName, productCategory, productType,null);
+
+                shopList.add(pro);
+
+            }
+            while(cursor.moveToNext());
+        }
+        else{
+            //list empty or ended
+        }
+        cursor.close();
+        db.close();
+        return shopList;
     }
 }

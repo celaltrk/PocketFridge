@@ -28,6 +28,9 @@ public class ShoppingListFragment extends Fragment {
     private ShoppingListViewModel shoppingListViewModel;
     private FragmentShoppinglistBinding binding;
     RecyclerView fridgeRecyclerView;
+    RecyclerView ShoppingListRecyclerView;
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         shoppingListViewModel =
@@ -38,6 +41,16 @@ public class ShoppingListFragment extends Fragment {
         return root;
     }
 
+    public void createShoppingList() {
+        DBHelper dbhelper = new DBHelper(getActivity());
+        ArrayList<Product> items = dbhelper.getAll_ShoppingList();
+        Collections.sort(items);
+        ShoppingListRecyclerView = (RecyclerView) getView().findViewById((R.id.fridge_recyclerView));
+        ItemAdapter adapter = new ItemAdapter(items);
+        ShoppingListRecyclerView.setHasFixedSize(true);
+        ShoppingListRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        ShoppingListRecyclerView.setAdapter(adapter);
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

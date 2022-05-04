@@ -25,6 +25,7 @@ public class ShoppingListFragment extends Fragment {
     private ShoppingListViewModel shoppingListViewModel;
     private FragmentShoppinglistBinding binding;
     RecyclerView shoppingListRecyclerView;
+    DBHelper dbhelper = new DBHelper(getActivity());
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -38,7 +39,7 @@ public class ShoppingListFragment extends Fragment {
     }
 
     public void createShoppingList() {
-        DBHelper dbhelper = new DBHelper(getActivity());
+
         ArrayList<Product> items = dbhelper.getAll_ShoppingList();
         Collections.sort(items);
         shoppingListRecyclerView = (RecyclerView) getView().findViewById((R.id.SL_recyclerView));

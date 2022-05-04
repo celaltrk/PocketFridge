@@ -40,6 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(createTable);
 
         String createListDB = "CREATE TABLE Shopping_List (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "Name TEXT, " +
                 "Category TEXT, " +
                 "Type TEXT, "+
@@ -153,5 +154,11 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return shopList;
+    }
+    public void deleteProduct(int id, String tableName) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + tableName+ " WHERE "+"id"+"='"+id+"'");
+        db.close();
     }
 }

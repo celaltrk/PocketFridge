@@ -32,19 +32,19 @@ public class DBHelper extends SQLiteOpenHelper {
         String createTable = "CREATE TABLE ProductTable (Name TEXT, " +
                 "IsExpirable BOOL, " +
                 "ExpDate TEXT, " +
-                "Category TEXT," +
+                "Category TEXT, " +
                 "Type TEXT , " +
                 "IsLiquid BOOL, " +
-                "Quantity INTEGER)";
+                "Quantity INTEGER) ";
 
         db.execSQL(createTable);
 
         String createListDB = "CREATE TABLE Shopping_List (" +
-                "Name TEXT," +
-                "Category TEXT," +
-                "Type TEXT , " +
+                "Name TEXT, " +
+                "Category TEXT, " +
+                "Type TEXT, " +
                 "addingDate TEXT, " +
-                "isBought INTEGER)" ;
+                "isBought INTEGER) " ;
 
         db.execSQL(createListDB);
     }
@@ -76,7 +76,9 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
 
         cv.put("Name", product.getName());
-        String strDate=  dateFormat.format(cal.getTime());
+        cv.put("Category", product.getCategory());
+        cv.put("Type", product.getType());
+        String strDate= product.getExpDate();
         cv.put("addingDate", strDate);
         cv.put("isBought" , 0);
 

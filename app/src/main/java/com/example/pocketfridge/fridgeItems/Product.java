@@ -21,6 +21,9 @@ public class Product implements Comparable<Product> {
         if (expDate == null)
             this.expDate = Calendar.getInstance();
     }
+    public Product(String name) {
+        this.name = name;
+    }
 
     public String getName() {
         return this.name;
@@ -46,7 +49,7 @@ public class Product implements Comparable<Product> {
     }
     @Override
     public String toString() {
-        return name + "\nExpiration Date: " + getExpDate();
+        return name  + "\nCategory: " + getCategory() + "\nType: " + getType() + "\nExpiration Date: " + getExpDate();
     }
 
 

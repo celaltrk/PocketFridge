@@ -43,6 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "Name TEXT, " +
                 "Category TEXT, " +
                 "Type TEXT, " +
+                "Type TEXT , " +
                 "addingDate TEXT, " +
                 "isBought INTEGER) " ;
 

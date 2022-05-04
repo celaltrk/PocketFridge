@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 public class Recipe {
     String instructions;
-    ArrayList<Product> ingredients;
-    public Recipe(String instructions, ArrayList<Product> ingredients) {
+    String ingredients;
+    public Recipe(String instructions,String ingredients) {
         this.ingredients = ingredients;
         this.instructions = instructions;
     }
-    public ArrayList<Product> getIngredients() {
+    public String getIngredients() {
         return ingredients;
     }
     public String getInstructions() {
         return instructions;
     }
-    public void setIngredients(ArrayList<Product> ingredients) {
+    public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
     }
     public void setInstructions(String instructions) {

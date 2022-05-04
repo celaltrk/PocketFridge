@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class RecipeHelper extends SQLiteOpenHelper {
     private static String DBPath;
-    private static String DBName = "Recipes.db";
+    private static String DBName = "recipes.db";
     private Context mContext;
     private SQLiteDatabase myDataBase;
 

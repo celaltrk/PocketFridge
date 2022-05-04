@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pocketfridge.adapter.RecipeAdapter;
 import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.R;
 import com.example.pocketfridge.adapter.ItemAdapter;
@@ -41,7 +42,7 @@ public class FridgeFragment extends Fragment {
     }
     public void onStart() {
         super.onStart();
-        createFridge();
+        temp();
     }
     public void createFridge() {
         DBHelper dbhelper = new DBHelper(getActivity());
@@ -55,5 +56,17 @@ public class FridgeFragment extends Fragment {
         fridgeRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         fridgeRecyclerView.setAdapter(adapter);
     }
+    public void temp() {
+        RecipeHelper dbhelper = new RecipeHelper(getActivity());
+        dbhelper.createDB();
+        ArrayList<Recipe> products = dbhelper.getAllRecipes();
+        fridgeRecyclerView = (RecyclerView) getView().findViewById((R.id.fridge_recyclerView));
+        RecipeAdapter adapter = new RecipeAdapter(products);
+        fridgeRecyclerView.setHasFixedSize(true);
+        fridgeRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        fridgeRecyclerView.setAdapter(adapter);
+    }
+
+
 
 }

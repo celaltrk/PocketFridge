@@ -42,8 +42,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String createListDB = "CREATE TABLE Shopping_List (" +
                 "Name TEXT, " +
                 "Category TEXT, " +
-                "Type TEXT, " +
-                "Type TEXT , " +
+                "Type TEXT, "+
                 "addingDate TEXT, " +
                 "isBought INTEGER) " ;
 

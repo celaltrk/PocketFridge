@@ -21,4 +21,11 @@ public class Recipe {
     public void setInstructions(String instructions) {
         this.instructions = instructions;
     }
+
+    @Override
+    public String toString() {
+        return
+                "instructions='" + instructions + '\'' +
+                ", ingredients='" + ingredients ;
+    }
 }

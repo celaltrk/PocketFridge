@@ -8,7 +8,6 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.pocketfridge.R;
 import com.example.pocketfridge.fridgeItems.Product;
-import com.example.pocketfridge.fridgeItems.Recipe;
 
 import java.util.ArrayList;
 
@@ -17,7 +16,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
     private ArrayList<Product> products;
 
     // RecyclerView recyclerView;
-    public ItemAdapter(ArrayList<Recipe> products) {
+    public ItemAdapter(ArrayList<Product> products) {
         this.products = products;
     }
     @Override

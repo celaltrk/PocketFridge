@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         // Initialize objects
         addManuallyButton = (FloatingActionButton) findViewById(R.id.addProductSL);
 
+        //Creating Expiration object to check on fridge products everytime app is opened
+
     }
     public void addManuallyOnClick(View view) {
         Toast.makeText(getApplicationContext(), "Add Food Manually", Toast.LENGTH_SHORT).show();

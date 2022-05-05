@@ -7,6 +7,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsActivity extends AppCompatActivity {
+    public static int noOfDaysWarning = 3;
+    public static int sortValue = 0;
+    boolean darkMode;
+
+    public int getNoOfDaysWarning() {
+        return noOfDaysWarning;
+    }
+
+    public void setNoOfDaysWarning(int noOfDaysWarning) {
+        Expiration.warningDays = noOfDaysWarning;
+    }
+
+    public int getSortValue() {
+        return sortValue;
+    }
+
+    public void setSortValue(int sortValue) {
+        this.sortValue = sortValue;
+    }
+
+    public boolean isDarkMode() {
+        return darkMode;
+    }
+
+    public void setDarkMode(boolean darkMode) {
+        this.darkMode = darkMode;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

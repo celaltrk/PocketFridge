@@ -12,6 +12,9 @@ public class Product implements Comparable<Product> {
     String type;
     SimpleDateFormat dateFormat;
     final String dmy = "dd/MM/yyyy";
+    boolean expirable = true;
+    boolean isLiquid = false;
+    int quantity = 1;
     public Product(String name, String category, String type, Calendar expDate) {
         dateFormat= new SimpleDateFormat(dmy, Locale.UK);
         this.expDate = expDate;
@@ -20,25 +23,6 @@ public class Product implements Comparable<Product> {
         this.category = category;
         if (expDate == null)
             this.expDate = Calendar.getInstance();
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public String getExpDate() {
-        return dateFormat.format(expDate.getTime());
-    }
-
-    public Calendar getExpDateCalendar(){
-        return expDate;
-    }
-
-    public void setExpDate(Calendar date) {
-        expDate = date;
-    }
-    public void setName(String name) {
-        this.name = name;
     }
     @Override
     public int compareTo(Product product) {
@@ -49,24 +33,63 @@ public class Product implements Comparable<Product> {
         return name + "\nExpiration Date: " + getExpDate();
     }
 
+    public String getExpDate() {
+        return dateFormat.format(expDate.getTime());
+    }
 
-    public Boolean isExpirable() {
-        return true;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getType() {
         return type;
     }
 
-    public Boolean isLiquid() {
-        return null;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isExpirable() {
+        return expirable;
+    }
+
+    public void setExpirable(boolean expirable) {
+        this.expirable = expirable;
+    }
+
+    public boolean isLiquid() {
+        return isLiquid;
+    }
+
+    public void setLiquid(boolean liquid) {
+        isLiquid = liquid;
     }
 
     public int getQuantity() {
-        return 0;
+        return quantity;
     }
 
-    public String getCategory() {
-        return category;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
+
+    public Calendar getExpDateCalendar(){
+        return expDate;
+    }
+
+
+
+
 }

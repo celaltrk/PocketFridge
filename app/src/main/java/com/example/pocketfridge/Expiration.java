@@ -49,7 +49,7 @@ public class Expiration {
         return remainingDays;
     }
 
-    boolean isExpired(Product product){
+    public boolean isExpired(Product product){
         calendar = Calendar.getInstance();
         if(product.getExpDateCalendar().compareTo(calendar)>=0){
             return true;
@@ -57,7 +57,7 @@ public class Expiration {
         return false;
     }
 
-    boolean isClose(Product product){
+    public boolean isClose(Product product){
         Calendar calendarProduct = product.getExpDateCalendar();
         calendarProduct.set(Calendar.MILLISECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);

@@ -1,5 +1,7 @@
 package com.example.pocketfridge.fridgeItems;
 
+import com.example.pocketfridge.Expiration;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,6 +13,7 @@ public class Product implements Comparable<Product> {
     String category;
     String type;
     SimpleDateFormat dateFormat;
+    Expiration expiration;
     final String dmy = "dd/MM/yyyy";
     boolean expirable = true;
     boolean isLiquid = false;
@@ -88,6 +91,10 @@ public class Product implements Comparable<Product> {
     public Calendar getExpDateCalendar(){
         return expDate;
     }
+
+    public boolean isExpired(){return expiration.isExpired(this);}
+
+    public boolean isCloseToExpire(){return expiration.isClose(this);}
 
 
 

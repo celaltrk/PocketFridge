@@ -139,10 +139,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 String productName = cursor.getString(0);
                 String productCategory = cursor.getString(1);
                 String productType = cursor.getString(2);
-
-
                 Product pro = new Product(productName, productCategory, productType,null);
-
                 shopList.add(pro);
 
             }
@@ -156,9 +153,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return shopList;
     }
     public void deleteProduct(int id, String tableName) {
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + tableName+ " WHERE "+"id"+"='"+id+"'");
-        db.close();
+        System.out.println("xxx");
+        // TODO methods below create exception
+        //SQLiteDatabase db = this.getWritableDatabase();
+        //db.execSQL("DELETE FROM " + tableName+ " WHERE "+"id"+"='"+id+"'");
+        //db.close();
     }
 }

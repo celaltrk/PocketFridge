@@ -1,4 +1,5 @@
 package com.example.pocketfridge.adapter;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,7 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pocketfridge.MainActivity;
 import com.example.pocketfridge.R;
 import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.fridgeItems.Product;
@@ -15,11 +15,13 @@ import com.example.pocketfridge.fridgeItems.Product;
 import java.util.ArrayList;
 
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
     private ArrayList<Product> products;
+    private Activity act;
+    private String tableName;
 
     // RecyclerView recyclerView;
-    public ItemAdapter(ArrayList<Product> products) {
+    public ProductAdapter(Activity act, ArrayList<Product> products, String tableName) {
         this.products = products;
     }
     @Override
@@ -27,6 +29,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem= layoutInflater.inflate(R.layout.list_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(listItem);
+        this.act = act;
+        this.tableName = tableName;
         return viewHolder;
     }
 
@@ -44,6 +48,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
             @Override
             public boolean onLongClick(View view) {
                 Toast.makeText(view.getContext(),"Deleted item: " + myListData.toString(),Toast.LENGTH_SHORT).show();
+                DBHelper helper = new DBHelper(act);
+                helper.deleteProduct(holder.getAdapterPosition(),tableName);
                 return true;
             }
         });

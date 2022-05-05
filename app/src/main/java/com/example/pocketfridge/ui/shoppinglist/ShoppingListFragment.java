@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocketfridge.R;
-import com.example.pocketfridge.adapter.ItemAdapter;
+import com.example.pocketfridge.adapter.ProductAdapter;
 import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.databinding.FragmentShoppinglistBinding;
 import com.example.pocketfridge.fridgeItems.Product;
@@ -39,11 +39,10 @@ public class ShoppingListFragment extends Fragment {
     }
 
     public void createShoppingList() {
-
         ArrayList<Product> items = dbhelper.getAll_ShoppingList();
         Collections.sort(items);
         shoppingListRecyclerView = (RecyclerView) getView().findViewById((R.id.SL_recyclerView));
-        ItemAdapter adapter = new ItemAdapter(items);
+        ProductAdapter adapter = new ProductAdapter(getActivity(),items,"Shopping_List");
         shoppingListRecyclerView.setHasFixedSize(true);
         shoppingListRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         shoppingListRecyclerView.setAdapter(adapter);

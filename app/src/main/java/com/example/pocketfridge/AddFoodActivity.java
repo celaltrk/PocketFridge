@@ -113,25 +113,19 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
         SimpleDateFormat dateFormat=new SimpleDateFormat(dmy, Locale.UK);
         expDateEditText.setText(dateFormat.format(cal.getTime()));
         dateStr = dateFormat.format(cal.getTime());
-        Toast.makeText(getApplicationContext(), dateStr + " added", Toast.LENGTH_SHORT).show();
     }
     public void onClick(View view) {
         selectedName = nameInput.getText().toString();
         Toast.makeText(getApplicationContext(), selectedName + " added", Toast.LENGTH_SHORT).show();
-        Toast.makeText(getApplicationContext(), dateStr + "  date", Toast.LENGTH_SHORT).show();
-
         Product product;
         try{
             product = new Product(selectedName,selectedCategory,selectedType,cal);
-            Toast.makeText(getApplicationContext(), "Successfully created", Toast.LENGTH_SHORT).show();
         }
         catch (Exception e){
             Toast.makeText(getApplicationContext(), "Error Creating", Toast.LENGTH_SHORT).show();
             product = new Product("", "", "", null);
         }
         DBHelper dbhelper = new DBHelper(AddFoodActivity.this);
-        boolean worked = dbhelper.addOne(product);
-        Toast.makeText(getApplicationContext(), worked + "", Toast.LENGTH_SHORT).show();
-
+        dbhelper.addOne(product);
     }
 }

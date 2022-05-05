@@ -11,17 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pocketfridge.R;
-import com.example.pocketfridge.adapter.ItemAdapter;
-import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.databinding.FragmentAllrecipesBinding;
-import com.example.pocketfridge.fridgeItems.Product;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class AllRecipesFragment extends Fragment {
 

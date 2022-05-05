@@ -30,6 +30,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE ProductTable (Name TEXT, " +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, "+
                 "IsExpirable BOOL, " +
                 "ExpDate TEXT, " +
                 "Category TEXT, " +
@@ -40,7 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(createTable);
 
         String createListDB = "CREATE TABLE Shopping_List (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, "+
                 "Name TEXT, " +
                 "Category TEXT, " +
                 "Type TEXT, "+
@@ -53,6 +54,9 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
 
+        db.execSQL("DROP TABLE IF EXISTS ShoppingList");
+        db.execSQL("DROP TABLE IF EXISTS ProductTable");
+        onCreate(db);
     }
 
     public boolean addOne(Product product) {
@@ -98,11 +102,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
         do {
             String productName = cursor.getString(0);
-            boolean productExpirable = cursor.getInt(1) == 1 ? true : false;
-            String productExpDate = cursor.getString(2);
-            String productCategory = cursor.getString(3);
-            String productType = cursor.getString(4);
-            boolean productLiquid = cursor.getInt(5) == 1 ? true : false;
+            boolean productExpirable = cursor.getInt(2) == 1 ? true : false;
+            String productExpDate = cursor.getString(3);
+            String productCategory = cursor.getString(4);
+            String productType = cursor.getString(5);
+            boolean productLiquid = cursor.getInt(6) == 1 ? true : false;
             Product pro;
             try{
                 Calendar cal = Calendar.getInstance();
@@ -136,9 +140,9 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
 
             do {
-                String productName = cursor.getString(0);
-                String productCategory = cursor.getString(1);
-                String productType = cursor.getString(2);
+                String productName = cursor.getString(1);
+                String productCategory = cursor.getString(2);
+                String productType = cursor.getString(3);
                 Product pro = new Product(productName, productCategory, productType,null);
                 shopList.add(pro);
 
@@ -152,11 +156,13 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return shopList;
     }
-    public void deleteProduct(int id, String tableName) {
+    public boolean deleteProduct(int id, String tableName) {
         System.out.println("xxx");
-        // TODO methods below create exception
-        //SQLiteDatabase db = this.getWritableDatabase();
-        //db.execSQL("DELETE FROM " + tableName+ " WHERE "+"id"+"='"+id+"'");
-        //db.close();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + tableName + " WHERE id = " + id;
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()) return true;
+        else return false;
     }
 }

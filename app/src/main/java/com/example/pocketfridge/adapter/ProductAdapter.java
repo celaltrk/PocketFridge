@@ -8,6 +8,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pocketfridge.AddShoppingListActivity;
+import com.example.pocketfridge.MainActivity;
 import com.example.pocketfridge.R;
 import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.fridgeItems.Product;
@@ -47,10 +49,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Toast.makeText(view.getContext(),"Deleted item: " + myListData.toString(),Toast.LENGTH_SHORT).show();
-                DBHelper helper = new DBHelper(act);
-                helper.deleteProduct(holder.getAdapterPosition(),tableName);
-                return true;
+                Toast.makeText(view.getContext(),"Deleted item: " + holder.getAdapterPosition() ,Toast.LENGTH_SHORT).show();
+              return true;
             }
         });
     }

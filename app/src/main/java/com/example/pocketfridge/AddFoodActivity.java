@@ -127,5 +127,6 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
         }
         DBHelper dbhelper = new DBHelper(AddFoodActivity.this);
         dbhelper.addOne(product);
+        dbhelper.deleteProduct(1,"ProductTable");
     }
 }

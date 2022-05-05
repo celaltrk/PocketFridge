@@ -2,6 +2,7 @@ package com.example.pocketfridge;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,6 +37,7 @@ public class AddShoppingListActivity extends AppCompatActivity implements Adapte
         typeSpinner = (Spinner) findViewById(R.id.typeInputSL);
         createCategories();
     }
+
     private void createCategories() {
         categories = new ArrayList<String>();
         for (int i = 0; i < table.length; i++)
@@ -93,5 +95,6 @@ public class AddShoppingListActivity extends AppCompatActivity implements Adapte
         DBHelper dbhelper = new DBHelper(AddShoppingListActivity.this);
         boolean worked = dbhelper.addToList(product);
         Toast.makeText(getApplicationContext(), worked + "", Toast.LENGTH_SHORT).show();
+
     }
 }

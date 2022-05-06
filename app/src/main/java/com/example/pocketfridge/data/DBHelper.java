@@ -157,8 +157,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return shopList;
     }
     public boolean deleteProduct(int id, String tableName) {
-        System.out.println("xxx");
-
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + tableName + " WHERE id = " + id;
         Cursor cursor = db.rawQuery(query, null);

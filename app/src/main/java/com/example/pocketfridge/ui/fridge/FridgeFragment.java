@@ -48,10 +48,8 @@ public class FridgeFragment extends Fragment {
         DBHelper dbhelper = new DBHelper(getActivity());
         ArrayList<Product> products = dbhelper.getAll_Fridge();
         Collections.sort(products);
-
-
         fridgeRecyclerView = (RecyclerView) getView().findViewById((R.id.fridge_recyclerView));
-        ProductAdapter adapter = new ProductAdapter(getActivity(), products, "ProductTable");
+        ProductAdapter adapter = new ProductAdapter(this, products, "ProductTable", dbhelper);
         fridgeRecyclerView.setHasFixedSize(true);
         fridgeRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         fridgeRecyclerView.setAdapter(adapter);

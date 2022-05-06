@@ -95,6 +95,5 @@ public class AddShoppingListActivity extends AppCompatActivity implements Adapte
         DBHelper dbhelper = new DBHelper(AddShoppingListActivity.this);
         boolean worked = dbhelper.addToList(product);
         Toast.makeText(getApplicationContext(), worked + "", Toast.LENGTH_SHORT).show();
-
     }
 }

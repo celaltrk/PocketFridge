@@ -43,7 +43,7 @@ public class ShoppingListFragment extends Fragment {
         DBHelper dbhelper = new DBHelper(getActivity());
         ArrayList<Product> items = dbhelper.getAll_ShoppingList();
         shoppingListRecyclerView = (RecyclerView) getView().findViewById((R.id.SL_recyclerView));
-        ProductAdapter adapter = new ProductAdapter(getActivity(),items,"Shopping_List");
+        ProductAdapter adapter = new ProductAdapter(this,items,"Shopping_List", dbhelper);
         shoppingListRecyclerView.setHasFixedSize(true);
         shoppingListRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         shoppingListRecyclerView.setAdapter(adapter);

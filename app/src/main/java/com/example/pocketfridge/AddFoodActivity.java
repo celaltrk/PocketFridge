@@ -122,11 +122,9 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
             product = new Product(selectedName,selectedCategory,selectedType,cal);
         }
         catch (Exception e){
-            Toast.makeText(getApplicationContext(), "Error Creating", Toast.LENGTH_SHORT).show();
             product = new Product("", "", "", null);
         }
         DBHelper dbhelper = new DBHelper(AddFoodActivity.this);
         dbhelper.addOne(product);
-        dbhelper.deleteProduct(1,"ProductTable");
     }
 }

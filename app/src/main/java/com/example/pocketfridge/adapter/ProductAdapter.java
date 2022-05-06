@@ -6,33 +6,37 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pocketfridge.AddShoppingListActivity;
-import com.example.pocketfridge.MainActivity;
 import com.example.pocketfridge.R;
 import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.fridgeItems.Product;
+import com.example.pocketfridge.ui.fridge.FridgeFragment;
 
 import java.util.ArrayList;
 
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
     private ArrayList<Product> products;
-    private Activity act;
+    private Fragment fr;
     private String tableName;
+    private DBHelper helper;
+
 
     // RecyclerView recyclerView;
-    public ProductAdapter(Activity act, ArrayList<Product> products, String tableName) {
+    public ProductAdapter(Fragment fr, ArrayList<Product> products, String tableName, DBHelper helper) {
         this.products = products;
+        this.fr = fr;
+        this.tableName = tableName;
+        this.helper = helper;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem= layoutInflater.inflate(R.layout.list_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(listItem);
-        this.act = act;
-        this.tableName = tableName;
         return viewHolder;
     }
 
@@ -50,6 +54,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             @Override
             public boolean onLongClick(View view) {
                 Toast.makeText(view.getContext(),"Deleted item: " + holder.getAdapterPosition() ,Toast.LENGTH_SHORT).show();
+                helper.deleteProduct(holder.getAdapterPosition() +1,tableName);
+                if (fr instanceof FridgeFragment)
+                    ((FridgeFragment) fr).createFridge();
               return true;
             }
         });

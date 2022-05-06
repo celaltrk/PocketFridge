@@ -5,8 +5,12 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.pocketfridge.R;
+import com.example.pocketfridge.data.DBHelper;
+import com.example.pocketfridge.data.RecipeHelper;
 import com.example.pocketfridge.fridgeItems.Product;
 import com.example.pocketfridge.fridgeItems.Recipe;
 
@@ -15,9 +19,15 @@ import java.util.ArrayList;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder>{
     private ArrayList<Recipe> recipes;
+    private Fragment fr;
+    private String tableName;
+    private RecipeHelper helper;
 
-    public RecipeAdapter(ArrayList<Recipe> recipes) {
+    public RecipeAdapter(Fragment fr, ArrayList<Recipe> recipes, String tableName, RecipeHelper helper) {
         this.recipes = recipes;
+        this.fr = fr;
+        this.tableName = tableName;
+        this.helper = helper;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

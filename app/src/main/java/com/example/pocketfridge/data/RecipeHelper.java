@@ -87,22 +87,23 @@ public class RecipeHelper extends SQLiteOpenHelper {
     }
     public ArrayList<Recipe> getAllRecipes() {
         ArrayList<Recipe> recipes = new ArrayList<>();
-        String queryStr = "SELECT * FROM tbl_recipe";
+        String queryStr = "SELECT * FROM tbl_recipe ";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryStr,null);
 
         if (cursor.moveToFirst()) {
 
             do {
+                String name = cursor.getString(0);
                 String recipeIngredients = cursor.getString(1) ;
                 String instructions = cursor.getString(2);
 
                 Recipe recipe;
                 try{
-                    recipe = new Recipe(instructions,recipeIngredients);
+                    recipe = new Recipe(name,instructions,recipeIngredients);
                 }
                 catch (NumberFormatException e) {
-                    recipe = new Recipe("no data", "no data");
+                    recipe = new Recipe("no data","no data", "no data");
                 }
                 recipes.add(recipe);
 

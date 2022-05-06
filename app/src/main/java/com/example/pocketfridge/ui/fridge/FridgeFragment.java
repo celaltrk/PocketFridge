@@ -54,17 +54,4 @@ public class FridgeFragment extends Fragment {
         fridgeRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         fridgeRecyclerView.setAdapter(adapter);
     }
-    public void temp() {
-        RecipeHelper dbhelper = new RecipeHelper(getActivity());
-        dbhelper.createDB();
-        ArrayList<Recipe> products = dbhelper.getAllRecipes();
-        fridgeRecyclerView = (RecyclerView) getView().findViewById((R.id.fridge_recyclerView));
-        RecipeAdapter adapter = new RecipeAdapter(products);
-        fridgeRecyclerView.setHasFixedSize(true);
-        fridgeRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        fridgeRecyclerView.setAdapter(adapter);
-    }
-
-
-
 }

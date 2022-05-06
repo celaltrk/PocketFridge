@@ -30,6 +30,7 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
     String selectedType, selectedCategory, selectedName;
     String dateStr;
     Calendar cal = Calendar.getInstance();
+    static int id = 0;
     final static String dmy = "dd/MM/yyyy";
     final static String[][] table = {
             {"Categories","Select Category First"},
@@ -119,10 +120,10 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
         Toast.makeText(getApplicationContext(), selectedName + " added", Toast.LENGTH_SHORT).show();
         Product product;
         try{
-            product = new Product(selectedName,selectedCategory,selectedType,cal);
+            product = new Product(selectedName,selectedCategory,selectedType,cal,id++);
         }
         catch (Exception e){
-            product = new Product("", "", "", null);
+            product = new Product("", "", "", null,id++);
         }
         DBHelper dbhelper = new DBHelper(AddFoodActivity.this);
         dbhelper.addOne(product);

@@ -102,6 +102,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         do {
             String productName = cursor.getString(0);
+            int productId = cursor.getInt(1);
             boolean productExpirable = cursor.getInt(2) == 1 ? true : false;
             String productExpDate = cursor.getString(3);
             String productCategory = cursor.getString(4);
@@ -113,10 +114,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 cal.set(Calendar.YEAR, Integer.parseInt(productExpDate.substring(6,10)));
                 cal.set(Calendar.MONTH,Integer.parseInt(productExpDate.substring(3,5))-1);
                 cal.set(Calendar.DAY_OF_MONTH,Integer.parseInt(productExpDate.substring(0,2)));
-                pro = new Product(productName, productCategory, productType,cal);
+                pro = new Product(productName, productCategory, productType,cal,productId);
             }
             catch (NumberFormatException e) {
-                pro = new Product(productName, productCategory, productType,null);
+                pro = new Product(productName, productCategory, productType,null,productId);
             }
             items.add(pro);
 
@@ -140,10 +141,11 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
 
             do {
+                int productId = cursor.getInt(0);
                 String productName = cursor.getString(1);
                 String productCategory = cursor.getString(2);
                 String productType = cursor.getString(3);
-                Product pro = new Product(productName, productCategory, productType,null);
+                Product pro = new Product(productName, productCategory, productType,null,productId);
                 shopList.add(pro);
 
             }

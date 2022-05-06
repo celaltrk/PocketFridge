@@ -14,6 +14,7 @@ import com.example.pocketfridge.R;
 import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.fridgeItems.Product;
 import com.example.pocketfridge.ui.fridge.FridgeFragment;
+import com.example.pocketfridge.ui.shoppinglist.ShoppingListFragment;
 
 import java.util.ArrayList;
 
@@ -47,16 +48,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(),"Clicked on item: " + myListData.toString(),Toast.LENGTH_SHORT).show();
+                
             }
         });
         holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Toast.makeText(view.getContext(),"Deleted item: " + holder.getAdapterPosition() ,Toast.LENGTH_SHORT).show();
-                helper.deleteProduct(holder.getAdapterPosition() +1,tableName);
+                Toast.makeText(view.getContext(),"Product deleted: " + myListData.getName(),Toast.LENGTH_SHORT).show();
+                helper.deleteProduct(myListData.getId(),tableName);
                 if (fr instanceof FridgeFragment)
                     ((FridgeFragment) fr).createFridge();
+                if (fr instanceof ShoppingListFragment)
+                    ((ShoppingListFragment) fr).createShoppingList();
               return true;
             }
         });

@@ -28,6 +28,7 @@ public class AddShoppingListActivity extends AppCompatActivity implements Adapte
     Calendar cal = Calendar.getInstance();
     final static String dmy = AddFoodActivity.dmy;
     final static String[][] table = AddFoodActivity.table;
+    static int id = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,12 +86,12 @@ public class AddShoppingListActivity extends AppCompatActivity implements Adapte
 
         Product product;
         try{
-            product = new Product(selectedName,selectedCategory,selectedType,null);
+            product = new Product(selectedName,selectedCategory,selectedType,null,id++);
             Toast.makeText(getApplicationContext(), "Successfully created", Toast.LENGTH_SHORT).show();
         }
         catch (Exception e){
             Toast.makeText(getApplicationContext(), "Error Creating", Toast.LENGTH_SHORT).show();
-            product = new Product("", "", "", null);
+            product = new Product("", "", "", null,id++);
         }
         DBHelper dbhelper = new DBHelper(AddShoppingListActivity.this);
         boolean worked = dbhelper.addToList(product);

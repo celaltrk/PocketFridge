@@ -9,11 +9,13 @@ public class Product implements Comparable<Product> {
     Calendar expDate;
     String name;
     String category;
+    int id;
     String type;
     SimpleDateFormat dateFormat;
     final String dmy = "dd/MM/yyyy";
-    public Product(String name, String category, String type, Calendar expDate) {
+    public Product(String name, String category, String type, Calendar expDate,int id) {
         dateFormat= new SimpleDateFormat(dmy, Locale.UK);
+        this.id = id;
         this.expDate = expDate;
         this.name = name;
         this.type = type;
@@ -51,7 +53,9 @@ public class Product implements Comparable<Product> {
     public String toString() {
         return name  + "\nCategory: " + getCategory() + "\nType: " + getType() + "\nExpiration Date: " + getExpDate();
     }
-
+    public int getId() {
+        return id;
+    }
 
     public Boolean isExpirable() {
         return true;

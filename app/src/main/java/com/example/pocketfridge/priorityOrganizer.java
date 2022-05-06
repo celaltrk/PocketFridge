@@ -21,7 +21,7 @@ public class priorityOrganizer {
             if (products.get(m).equals(p))
                 return m;
 
-            if (products.get(m).sortValue > p.sortValue)
+            if (products.get(m).compareTo(p)<0)
                 r = m - 1;
             else
                 l = m + 1;

@@ -1,4 +1,4 @@
-package com.example.pocketfridge;
+package com.example.pocketfridge.fridgeItems;
 
 import com.example.pocketfridge.fridgeItems.Product;
 

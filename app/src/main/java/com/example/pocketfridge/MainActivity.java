@@ -1,5 +1,8 @@
 package com.example.pocketfridge;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +14,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -32,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //One time work to check expired products
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            worker();
+        }
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -48,11 +58,14 @@ public class MainActivity extends AppCompatActivity {
         // Initialize objects
         addManuallyButton = (FloatingActionButton) findViewById(R.id.addProductSL);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            worker();
-        }
-        //Creating Expiration object to check on fridge products everytime app is opened
 
+        //Notification
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("Notification","Channel", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+        notification();
     }
     public void addManuallyOnClick(View view) {
         Toast.makeText(getApplicationContext(), "Add Food Manually", Toast.LENGTH_SHORT).show();
@@ -69,13 +82,24 @@ public class MainActivity extends AppCompatActivity {
     public void worker(){
         Constraints constraints = new Constraints.Builder()
                 .build();
-        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(SampleWorler.class)
+        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(OneTimeWorker.class)
                 .setConstraints(constraints)
                 .setInitialDelay(10,TimeUnit.SECONDS)
                 .addTag("Periodic Work")
                 .build();
         WorkManager.getInstance(this).enqueue(oneTimeWorkRequest);
 
+    }
+
+    public void notification(){
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(MainActivity.this,"Notification");
+        notification.setContentTitle("Title");
+        notification.setContentText("Works");
+        notification.setSmallIcon(R.drawable.ic_launcher_background);
+        notification.setAutoCancel(true);
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+        managerCompat.notify(1,notification.build());
     }
 
 }

@@ -39,7 +39,7 @@ public class RecipeHelper extends SQLiteOpenHelper {
 
         }
         if(tempDB != null){
-            tempDB.close();
+            tempDB.close();;
         }
         return tempDB != null ? true: false;
     }

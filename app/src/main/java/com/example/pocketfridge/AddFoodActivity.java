@@ -67,7 +67,6 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedType = typeSpinner.getSelectedItem().toString();
-                Toast.makeText(getApplicationContext(), selectedType, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -83,7 +82,6 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         selectedCategory = categorySpinner.getSelectedItem().toString();
-        Toast.makeText(getApplicationContext(), selectedCategory, Toast.LENGTH_SHORT).show();
         createTypes(i);
     }
 
@@ -117,7 +115,7 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
     }
     public void onClick(View view) {
         selectedName = nameInput.getText().toString();
-        Toast.makeText(getApplicationContext(), selectedName + " added", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Product added: "+selectedName, Toast.LENGTH_SHORT).show();
         Product product;
         try{
             product = new Product(selectedName,selectedCategory,selectedType,cal,id++);

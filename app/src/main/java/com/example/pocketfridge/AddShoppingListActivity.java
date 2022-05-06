@@ -57,7 +57,6 @@ public class AddShoppingListActivity extends AppCompatActivity implements Adapte
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedType = typeSpinner.getSelectedItem().toString();
-                Toast.makeText(getApplicationContext(), selectedType, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -72,7 +71,6 @@ public class AddShoppingListActivity extends AppCompatActivity implements Adapte
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         selectedCategory = categorySpinner.getSelectedItem().toString();
-        Toast.makeText(getApplicationContext(), selectedCategory, Toast.LENGTH_SHORT).show();
         createTypes(i);
     }
 
@@ -87,14 +85,11 @@ public class AddShoppingListActivity extends AppCompatActivity implements Adapte
         Product product;
         try{
             product = new Product(selectedName,selectedCategory,selectedType,null,id++);
-            Toast.makeText(getApplicationContext(), "Successfully created", Toast.LENGTH_SHORT).show();
         }
         catch (Exception e){
-            Toast.makeText(getApplicationContext(), "Error Creating", Toast.LENGTH_SHORT).show();
             product = new Product("", "", "", null,id++);
         }
         DBHelper dbhelper = new DBHelper(AddShoppingListActivity.this);
-        boolean worked = dbhelper.addToList(product);
-        Toast.makeText(getApplicationContext(), worked + "", Toast.LENGTH_SHORT).show();
+        dbhelper.addToList(product);
     }
 }

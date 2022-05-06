@@ -40,12 +40,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void addManuallyOnClick(View view) {
-        Toast.makeText(getApplicationContext(), "Add Food Manually", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, AddFoodActivity.class);
         startActivity(intent);
     }
     public void addSLOnClick(View view) {
-        Toast.makeText(getApplicationContext(), "Add Shopping List", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, AddShoppingListActivity.class);
         startActivity(intent);
     }

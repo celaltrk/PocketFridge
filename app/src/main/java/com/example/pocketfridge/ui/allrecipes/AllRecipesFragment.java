@@ -15,19 +15,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pocketfridge.adapter.RecipeAdapter;
 import com.example.pocketfridge.R;
 import com.example.pocketfridge.data.RecipeHelper;
-import com.example.pocketfridge.databinding.FragmentFridgeBinding;
 import com.example.pocketfridge.fridgeItems.Recipe;
+import com.example.pocketfridge.databinding.FragmentAllrecipesBinding;
 
 import java.util.ArrayList;
 
 public class AllRecipesFragment extends Fragment {
     private AllRecipesViewModel allRecipesViewModel;
-    private FragmentFridgeBinding binding;
-    RecyclerView AllRecipesRecyclerView;
+    private FragmentAllrecipesBinding binding;
+    RecyclerView allrecipesRecyclerView;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        AllRecipesViewModel allRecipesViewModel = new ViewModelProvider(this).get(AllRecipesViewModel.class);
-        binding = FragmentFridgeBinding.inflate(inflater, container, false);
+        allRecipesViewModel = new ViewModelProvider(this).get(AllRecipesViewModel.class);
+        binding = FragmentAllrecipesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         return root;
     }
@@ -40,15 +40,14 @@ public class AllRecipesFragment extends Fragment {
         super.onStart();
         createAllRecipes();
     }
-
     public void createAllRecipes() {
-        RecipeHelper recipeHelper = new RecipeHelper(getActivity());
-        recipeHelper.createDB();
-        ArrayList<Recipe> products = recipeHelper.getAllRecipes();
-        AllRecipesRecyclerView = (RecyclerView) getView().findViewById((R.id.allRecipesList));
-        RecipeAdapter adapter = new RecipeAdapter(this,products,"tbl_recipe",recipeHelper);
-        AllRecipesRecyclerView.setHasFixedSize(true);
-        AllRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        AllRecipesRecyclerView.setAdapter(adapter);
+        RecipeHelper dbhelper = new RecipeHelper(getActivity());
+        dbhelper.createDB();
+        ArrayList<Recipe> recipes = dbhelper.getAllRecipes();
+        allrecipesRecyclerView = (RecyclerView) getView().findViewById((R.id.allrecipes_recyclerView));
+        RecipeAdapter adapter = new RecipeAdapter(this, recipes, "tbl_recipe", dbhelper);
+        allrecipesRecyclerView.setHasFixedSize(true);
+        allrecipesRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        allrecipesRecyclerView.setAdapter(adapter);
     }
 }

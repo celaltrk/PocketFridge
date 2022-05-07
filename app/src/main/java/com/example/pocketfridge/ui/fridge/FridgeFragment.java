@@ -28,6 +28,7 @@ public class FridgeFragment extends Fragment {
     private FridgeViewModel fridgeViewModel;
     private FragmentFridgeBinding binding;
     RecyclerView fridgeRecyclerView;
+    RecyclerView AllRecipesRecyclerView;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         fridgeViewModel = new ViewModelProvider(this).get(FridgeViewModel.class);

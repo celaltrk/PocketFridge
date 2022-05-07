@@ -1,5 +1,11 @@
 package com.example.pocketfridge.adapter;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +16,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pocketfridge.MainActivity;
 import com.example.pocketfridge.R;
 import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.fridgeItems.Product;
@@ -17,6 +24,7 @@ import com.example.pocketfridge.ui.fridge.FridgeFragment;
 import com.example.pocketfridge.ui.shoppinglist.ShoppingListFragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
@@ -25,8 +33,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private String tableName;
     private DBHelper helper;
 
-
-    // RecyclerView recyclerView;
     public ProductAdapter(Fragment fr, ArrayList<Product> products, String tableName, DBHelper helper) {
         this.products = products;
         this.fr = fr;
@@ -40,11 +46,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         ViewHolder viewHolder = new ViewHolder(listItem);
         return viewHolder;
     }
-
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Product myListData = products.get(position);
-        holder.textView.setText(products.get(position).toString());
+        holder.textView.setText(myListData.toString());
+        if (fr instanceof FridgeFragment) {
+            if (myListData.getExpDateCalendar().before(Calendar.getInstance())) {
+                holder.textView.setTextColor(Color.rgb(255, 0, 176));
+            }
+        }
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,10 +65,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
+                Vibrator v = (Vibrator) fr.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                }
                 Toast.makeText(view.getContext(),"Product deleted: " + myListData.getName(),Toast.LENGTH_SHORT).show();
                 helper.deleteProduct(myListData.getId(),tableName);
-                if (fr instanceof FridgeFragment)
+                if (fr instanceof FridgeFragment) {
                     ((FridgeFragment) fr).createFridge();
+                     helper.addToList(myListData);
+                }
                 if (fr instanceof ShoppingListFragment)
                     ((ShoppingListFragment) fr).createShoppingList();
               return true;

@@ -39,7 +39,7 @@ public class RecipeHelper extends SQLiteOpenHelper {
 
         }
         if(tempDB != null){
-            tempDB.close();;
+            tempDB.close();
         }
         return tempDB != null ? true: false;
     }
@@ -120,6 +120,39 @@ public class RecipeHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
+    }
+
+    public ArrayList<Recipe> suggestRecipe(String str){
+        String query = "SELECT * FROM tbl_recipe WHERE SALARY LIKE %" + str + "%";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        ArrayList<Recipe> recipes = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+
+            do {
+                String name = cursor.getString(0);
+                String recipeIngredients = cursor.getString(1) ;
+                String instructions = cursor.getString(2);
+
+                Recipe recipe;
+                try{
+                    recipe = new Recipe(name,instructions,recipeIngredients);
+                }
+                catch (NumberFormatException e) {
+                    recipe = new Recipe("no data","no data", "no data");
+                }
+                recipes.add(recipe);
+
+            }
+            while(cursor.moveToNext());
+        }
+        else{
+            //list empty or ended
+        }
+        cursor.close();
+        db.close();
+        return recipes;
     }
 
     @Override

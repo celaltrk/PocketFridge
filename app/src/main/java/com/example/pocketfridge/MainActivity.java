@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.pocketfridge.data.DBHelper;
+import com.example.pocketfridge.fridgeItems.Product;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -40,12 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void addManuallyOnClick(View view) {
-        Toast.makeText(getApplicationContext(), "Add Food Manually", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, AddFoodActivity.class);
         startActivity(intent);
     }
     public void addSLOnClick(View view) {
-        Toast.makeText(getApplicationContext(), "Add Shopping List", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, AddShoppingListActivity.class);
         startActivity(intent);
     }

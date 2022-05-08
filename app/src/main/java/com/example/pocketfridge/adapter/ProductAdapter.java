@@ -62,10 +62,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.relativeLayout.setLayoutParams(params);
         if (fr instanceof FridgeFragment) {
             if (product.getExpDateCalendar().before(Calendar.getInstance())) {
-                holder.textView.setTextColor(Color.rgb(153, 15, 2));
+                holder.textView.setTextColor(Color.rgb(150, 15, 2));
             }
             if (expController.isCloseToExpire(product)) {
-                holder.textView.setTextColor(Color.rgb(170, 0, 2));
+                if (!(product.getExpDateCalendar().before(Calendar.getInstance())))
+                holder.textView.setTextColor(Color.rgb(100, 15, 2));
                 helper.markAsClose(product.getId());
             }
         }

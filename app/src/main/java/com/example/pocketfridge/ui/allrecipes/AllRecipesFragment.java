@@ -44,6 +44,8 @@ public class AllRecipesFragment extends Fragment {
         RecipeHelper dbhelper = new RecipeHelper(getActivity());
         dbhelper.createDB();
         ArrayList<Recipe> recipes = dbhelper.getAllRecipes();
+
+
         allrecipesRecyclerView = (RecyclerView) getView().findViewById((R.id.allrecipes_recyclerView));
         RecipeAdapter adapter = new RecipeAdapter(this, recipes, "tbl_recipe", dbhelper);
         allrecipesRecyclerView.setHasFixedSize(false);

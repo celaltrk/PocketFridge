@@ -65,16 +65,23 @@ public class ZeroWastageFragment extends Fragment {
     public ArrayList<Recipe> suggestRecipes() {
         DBHelper dbHelper = new DBHelper(getActivity());
         ArrayList<Product> closeToExpire = dbHelper.getClosetoExpire();
+        for(Product p : closeToExpire){
+            System.out.println(p);
+        }
         ArrayList<Recipe> suggested = new ArrayList<>();
         ArrayList<Recipe> temp = new ArrayList<>();
         String name;
+        boolean exists;
         for (int i = 0; i < closeToExpire.size(); i++){
             name = closeToExpire.get(i).getName();
             temp = recipeHelper.suggestRecipe(name);
             if(!(name.equals(""))){
                 for(int j = 0; j < temp.size(); j++){
-                    if(!(suggested.contains(temp.get(j))))
-                    suggested.add(temp.get(j));
+                    exists = false;
+                    for (int k = 0; k < suggested.size(); k++){
+                        if(suggested.get(k).equals(temp.get(j))) exists = true;
+                    }
+                    if(!exists) suggested.add(temp.get(j));
                 }
             }
         }

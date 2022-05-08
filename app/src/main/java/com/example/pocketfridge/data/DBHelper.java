@@ -168,7 +168,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     public boolean markAsClose(int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "UPDATE table SET IsClosetoExpire = 1 WHERE " +
+        String query = "UPDATE ProductTable SET IsClosetoExpire = 1 WHERE " +
                 "id = " + id;
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()) return true;
@@ -199,6 +199,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 } catch (NumberFormatException e) {
                     pro = new Product(productName, productCategory, productType, null, productId);
                 }
+                products.add(pro);
             }
             while(cursor.moveToNext());
         }

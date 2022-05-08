@@ -16,6 +16,7 @@ public class ExpirationController {
     Calendar calendar;
 
     public ExpirationController() {
+        calendar = Calendar.getInstance();
     }
 
     public int getWarningDays() {

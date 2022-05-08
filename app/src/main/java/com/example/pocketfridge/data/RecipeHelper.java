@@ -91,9 +91,9 @@ public class RecipeHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
 
             do {
-                String name = cursor.getString(0);
-                String recipeIngredients = cursor.getString(1) ;
-                String instructions = cursor.getString(2);
+                String name = cursor.getString(1);
+                String recipeIngredients = cursor.getString(2) ;
+                String instructions = cursor.getString(3);
 
                 Recipe recipe;
                 try{
@@ -116,11 +116,12 @@ public class RecipeHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        openDataBase();
 
     }
 
     public ArrayList<Recipe> suggestRecipe(String str){
-        String query = "SELECT * FROM tbl_recipe WHERE ingredients LIKE %" + str + "%";
+        String query = "SELECT * FROM tbl_recipe where ingredients LIKE '%"+ str +"%'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         ArrayList<Recipe> recipes = new ArrayList<>();
@@ -128,9 +129,9 @@ public class RecipeHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
 
             do {
-                String name = cursor.getString(0);
-                String recipeIngredients = cursor.getString(1) ;
-                String instructions = cursor.getString(2);
+                String name = cursor.getString(1);
+                String recipeIngredients = cursor.getString(2) ;
+                String instructions = cursor.getString(3);
 
                 Recipe recipe;
                 try{

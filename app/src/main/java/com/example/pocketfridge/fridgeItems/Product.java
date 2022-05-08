@@ -51,7 +51,7 @@ public class Product implements Comparable<Product> {
     }
     @Override
     public String toString() {
-        return name  + "\nCategory: " + getCategory() + "\nType: " + getType() + "\nExpiration Date: " + getExpDate();
+        return name  + "\nCategory: " + getCategory() + "\nType: " + getType() + "\nDate: " + getExpDate();
     }
     public int getId() {
         return id;

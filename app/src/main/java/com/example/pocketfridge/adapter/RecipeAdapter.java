@@ -1,4 +1,5 @@
 package com.example.pocketfridge.adapter;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,9 +47,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         ViewGroup.LayoutParams params = holder.relativeLayout.getLayoutParams();
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         holder.relativeLayout.setLayoutParams(params);
-        if (fr instanceof ZeroWastageFragment) {
-
-        }
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

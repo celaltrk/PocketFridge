@@ -31,6 +31,7 @@ public class ZeroWastageFragment extends Fragment {
     private FragmentZerowastageBinding binding;
     RecyclerView zwRecyclerView;
     TextView first;
+    RecipeHelper recipeHelper;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         zeroWastageViewModel = new ViewModelProvider(this).get(ZeroWastageViewModel.class);
@@ -46,10 +47,22 @@ public class ZeroWastageFragment extends Fragment {
     public void onStart() {
         super.onStart();
         first = getView().findViewById(R.id.firstZW);
+        recipeHelper = new RecipeHelper(getActivity());
         createZW();
     }
     public void createZW() {
-        RecipeHelper recipeHelper = new RecipeHelper(getActivity());
+        ArrayList<Recipe> suggestedRecipes = suggestRecipes();
+        if (suggestedRecipes.size() == 0)
+            first.setVisibility(View.VISIBLE);
+        else
+            first.setVisibility(View.INVISIBLE);
+        zwRecyclerView = (RecyclerView) getView().findViewById((R.id.zerowastage_recyclerView));
+        RecipeAdapter adapter = new RecipeAdapter(this, suggestedRecipes, null, recipeHelper);
+        zwRecyclerView.setHasFixedSize(false);
+        zwRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        zwRecyclerView.setAdapter(adapter);
+    }
+    public ArrayList<Recipe> suggestRecipes() {
         DBHelper dbHelper = new DBHelper(getActivity());
         ArrayList<Recipe> allRecipes = recipeHelper.getAllRecipes();
         ArrayList<Recipe> suggestedRecipes = new ArrayList<>();
@@ -68,15 +81,6 @@ public class ZeroWastageFragment extends Fragment {
                 }
             }
         }
-        if (suggestedRecipes.size() == 0)
-            first.setVisibility(View.VISIBLE);
-        else
-            first.setVisibility(View.INVISIBLE);
-        zwRecyclerView = (RecyclerView) getView().findViewById((R.id.zerowastage_recyclerView));
-        RecipeAdapter adapter = new RecipeAdapter(this, suggestedRecipes, null, recipeHelper);
-        zwRecyclerView.setHasFixedSize(false);
-        zwRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        zwRecyclerView.setAdapter(adapter);
+        return suggestedRecipes;
     }
-
 }

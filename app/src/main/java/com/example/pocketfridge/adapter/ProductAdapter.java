@@ -51,9 +51,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Product myListData = products.get(position);
         holder.textView.setText(myListData.toString());
+        ViewGroup.LayoutParams params = holder.relativeLayout.getLayoutParams();
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        holder.relativeLayout.setLayoutParams(params);
         if (fr instanceof FridgeFragment) {
             if (myListData.getExpDateCalendar().before(Calendar.getInstance())) {
-                holder.textView.setTextColor(Color.rgb(255, 0, 176));
+                holder.textView.setTextColor(Color.rgb(153, 15, 2));
             }
         }
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {

@@ -33,7 +33,7 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
     static int id = 0;
     final static String dmy = "dd/MM/yyyy";
     final static String[][] table = {
-            {"Categories","Select Category First"},
+            {"No category","No type"},
             {"1","1a","1b","1c","1d"},
             {"2","2a","2b","2c","2d"},
             {"3","3a","3b","3c","3d"},

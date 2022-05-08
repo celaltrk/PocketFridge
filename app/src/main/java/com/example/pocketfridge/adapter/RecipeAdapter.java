@@ -2,6 +2,7 @@ package com.example.pocketfridge.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View listItem= layoutInflater.inflate(R.layout.list_item, parent, false);
+        View listItem= layoutInflater.inflate(R.layout.list_recipe, parent, false);
         ViewHolder viewHolder = new ViewHolder(listItem);
         return viewHolder;
     }
@@ -40,7 +41,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Recipe myListData = recipes.get(position);
-        holder.textView.setText(recipes.get(position).toString());
+        holder.textView.setText(myListData.toString());
+        ViewGroup.LayoutParams params = holder.relativeLayout.getLayoutParams();
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        holder.relativeLayout.setLayoutParams(params);
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +64,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         public RelativeLayout relativeLayout;
         public ViewHolder(View itemView) {
             super(itemView);
-            this.textView = (TextView) itemView.findViewById(R.id.item_in_fridge);
+            this.textView = (TextView) itemView.findViewById(R.id.item_in_recipes);
             relativeLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayout);
         }
     }

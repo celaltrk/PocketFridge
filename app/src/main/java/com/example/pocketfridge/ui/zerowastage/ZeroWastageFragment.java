@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -46,10 +47,10 @@ public class ZeroWastageFragment extends Fragment {
     public void createZW() {
         RecipeHelper dbhelper = new RecipeHelper(getActivity());
         ArrayList<Recipe> recipes = new ArrayList<>();//dbhelper.suggestRecipe("süt");
-        recipes.add(new Recipe("yey","Sütü kaynat","süt"));
+        recipes.add(new Recipe("yey","Sütü kaynatttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n\n\n\n\n\n\n\nyes","süt"));
         zwRecyclerView = (RecyclerView) getView().findViewById((R.id.zerowastage_recyclerView));
         RecipeAdapter adapter = new RecipeAdapter(this, recipes, "ProductTable", dbhelper);
-        zwRecyclerView.setHasFixedSize(true);
+        zwRecyclerView.setHasFixedSize(false);
         zwRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         zwRecyclerView.setAdapter(adapter);
     }

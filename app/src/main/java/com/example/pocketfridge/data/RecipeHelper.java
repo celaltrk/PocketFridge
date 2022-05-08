@@ -73,15 +73,12 @@ public class RecipeHelper extends SQLiteOpenHelper {
     public void createDB(){
         boolean doesDBExist = checkDB();
         if(doesDBExist){
-
-        }
-        else{
             this.getReadableDatabase();
             try{
                 copyDataBase();
             }
             catch (Exception e){
-
+                e.printStackTrace();
             }
         }
     }

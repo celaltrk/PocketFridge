@@ -14,6 +14,7 @@ import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.data.RecipeHelper;
 import com.example.pocketfridge.fridgeItems.Product;
 import com.example.pocketfridge.fridgeItems.Recipe;
+import com.example.pocketfridge.ui.zerowastage.ZeroWastageFragment;
 
 import java.util.ArrayList;
 
@@ -40,15 +41,18 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Recipe myListData = recipes.get(position);
-        holder.textView.setText(myListData.toString());
+        final Recipe recipe = recipes.get(position);
+        holder.textView.setText(recipe.toString());
         ViewGroup.LayoutParams params = holder.relativeLayout.getLayoutParams();
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         holder.relativeLayout.setLayoutParams(params);
+        if (fr instanceof ZeroWastageFragment) {
+
+        }
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(),"Clicked on item: " + myListData.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(),"Clicked on item: " + recipe.toString(),Toast.LENGTH_SHORT).show();
             }
         });
     }

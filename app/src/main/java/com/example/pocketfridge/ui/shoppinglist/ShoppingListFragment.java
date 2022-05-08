@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,8 +27,8 @@ public class ShoppingListFragment extends Fragment {
     private ShoppingListViewModel shoppingListViewModel;
     private FragmentShoppinglistBinding binding;
     RecyclerView shoppingListRecyclerView;
-
-
+    DBHelper dbhelper;
+    TextView first;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -40,8 +41,14 @@ public class ShoppingListFragment extends Fragment {
     }
 
     public void createShoppingList() {
-        DBHelper dbhelper = new DBHelper(getActivity());
+        dbhelper = new DBHelper(getActivity());
         ArrayList<Product> items = dbhelper.getAll_ShoppingList();
+        if (items.size() == 0) {
+            first.setVisibility(View.VISIBLE);
+        }
+        else {
+            first.setVisibility(View.INVISIBLE);
+        }
         shoppingListRecyclerView = (RecyclerView) getView().findViewById((R.id.SL_recyclerView));
         ProductAdapter adapter = new ProductAdapter(this,items,"Shopping_List", dbhelper);
         shoppingListRecyclerView.setHasFixedSize(true);
@@ -57,6 +64,7 @@ public class ShoppingListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        first = getView().findViewById(R.id.firstSL);
         createShoppingList();
     }
 }

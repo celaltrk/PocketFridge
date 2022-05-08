@@ -3,6 +3,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -49,20 +50,30 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Product myListData = products.get(position);
-        holder.textView.setText(myListData.toString());
+        final Product product = products.get(position);
+        holder.textView.setText(product.toString());
         ViewGroup.LayoutParams params = holder.relativeLayout.getLayoutParams();
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         holder.relativeLayout.setLayoutParams(params);
         if (fr instanceof FridgeFragment) {
-            if (myListData.getExpDateCalendar().before(Calendar.getInstance())) {
+            if (product.getExpDateCalendar().before(Calendar.getInstance())) {
                 holder.textView.setTextColor(Color.rgb(153, 15, 2));
             }
         }
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                if (fr instanceof  ShoppingListFragment) {
+                    Vibrator v = (Vibrator) fr.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.EFFECT_DOUBLE_CLICK));
+                    }
+                    helper.addOne(product);
+                    holder.textView.setPaintFlags(holder.textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    holder.textView.setTextColor(Color.rgb(153, 15, 2));
+                    helper.deleteProduct(product.getId(),tableName);
+                    Toast.makeText(view.getContext(),"Product bought: " + product.getName(),Toast.LENGTH_SHORT).show();
+                }
             }
         });
         holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
@@ -72,11 +83,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
                 }
-                Toast.makeText(view.getContext(),"Product deleted: " + myListData.getName(),Toast.LENGTH_SHORT).show();
-                helper.deleteProduct(myListData.getId(),tableName);
+                Toast.makeText(view.getContext(),"Product deleted: " + product.getName(),Toast.LENGTH_SHORT).show();
+                helper.deleteProduct(product.getId(),tableName);
                 if (fr instanceof FridgeFragment) {
                     ((FridgeFragment) fr).createFridge();
-                     helper.addToList(myListData);
+                     helper.addToList(product);
                 }
                 if (fr instanceof ShoppingListFragment)
                     ((ShoppingListFragment) fr).createShoppingList();

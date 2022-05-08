@@ -35,4 +35,7 @@ public class Recipe implements Comparable<Recipe> {
     public int compareTo(Recipe recipe) {
         return this.name.compareTo(recipe.name);
     }
+    public boolean equals(Recipe recipe) {
+        return name.equals(recipe.name) && ingredients.equals(recipe.ingredients) && instructions.equals(recipe.instructions);
+    }
 }

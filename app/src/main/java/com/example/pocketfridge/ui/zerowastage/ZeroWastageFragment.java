@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,11 +24,13 @@ import com.example.pocketfridge.fridgeItems.Recipe;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 
 public class ZeroWastageFragment extends Fragment {
     private ZeroWastageViewModel zeroWastageViewModel;
     private FragmentZerowastageBinding binding;
     RecyclerView zwRecyclerView;
+    TextView first;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         zeroWastageViewModel = new ViewModelProvider(this).get(ZeroWastageViewModel.class);
@@ -42,14 +45,35 @@ public class ZeroWastageFragment extends Fragment {
     }
     public void onStart() {
         super.onStart();
+        first = getView().findViewById(R.id.firstZW);
         createZW();
     }
     public void createZW() {
-        RecipeHelper dbhelper = new RecipeHelper(getActivity());
-        ArrayList<Recipe> recipes = new ArrayList<>();//dbhelper.suggestRecipe("süt");
-        recipes.add(new Recipe("yey","Sütü kaynatttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n\n\n\n\n\n\n\nyes","süt"));
+        RecipeHelper recipeHelper = new RecipeHelper(getActivity());
+        DBHelper dbHelper = new DBHelper(getActivity());
+        ArrayList<Recipe> allRecipes = recipeHelper.getAllRecipes();
+        ArrayList<Recipe> suggestedRecipes = new ArrayList<>();
+        ArrayList<Product> products = dbHelper.getAll_Fridge();
+        for (int i = 0; i < allRecipes.size(); i++) {
+            for (int j = 0; j < products.size(); j++) {
+                if (allRecipes.get(i).getIngredients().toLowerCase().contains(products.get(j).getName().toLowerCase())) {
+                    boolean exists = false;
+                    for (int k = 0; k < suggestedRecipes.size(); k++) {
+                        if (suggestedRecipes.get(k).equals(allRecipes.get(i))) {
+                            exists = true;
+                        }
+                    }
+                    if (!exists)
+                        suggestedRecipes.add(allRecipes.get(i));
+                }
+            }
+        }
+        if (suggestedRecipes.size() == 0)
+            first.setVisibility(View.VISIBLE);
+        else
+            first.setVisibility(View.INVISIBLE);
         zwRecyclerView = (RecyclerView) getView().findViewById((R.id.zerowastage_recyclerView));
-        RecipeAdapter adapter = new RecipeAdapter(this, recipes, "ProductTable", dbhelper);
+        RecipeAdapter adapter = new RecipeAdapter(this, suggestedRecipes, null, recipeHelper);
         zwRecyclerView.setHasFixedSize(false);
         zwRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         zwRecyclerView.setAdapter(adapter);

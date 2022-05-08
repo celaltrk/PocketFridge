@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
@@ -12,14 +13,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pocketfridge.adapter.RecipeAdapter;
 import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.R;
 import com.example.pocketfridge.adapter.ProductAdapter;
-import com.example.pocketfridge.data.RecipeHelper;
 import com.example.pocketfridge.databinding.FragmentFridgeBinding;
 import com.example.pocketfridge.fridgeItems.Product;
-import com.example.pocketfridge.fridgeItems.Recipe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +27,7 @@ public class FridgeFragment extends Fragment {
     private FragmentFridgeBinding binding;
     RecyclerView fridgeRecyclerView;
     RecyclerView AllRecipesRecyclerView;
+    TextView first;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         fridgeViewModel = new ViewModelProvider(this).get(FridgeViewModel.class);
@@ -43,16 +42,24 @@ public class FridgeFragment extends Fragment {
     }
     public void onStart() {
         super.onStart();
+        first = getView().findViewById(R.id.firstFR);
         createFridge();
     }
     public void createFridge() {
         DBHelper dbhelper = new DBHelper(getActivity());
         ArrayList<Product> products = dbhelper.getAll_Fridge();
-        Collections.sort(products);
+        if (products.size() == 0) {
+            first.setVisibility(View.VISIBLE);
+        }
+        else {
+            first.setVisibility(View.INVISIBLE);
+        }
         fridgeRecyclerView = (RecyclerView) getView().findViewById((R.id.fridge_recyclerView));
+        Collections.sort(products);
         ProductAdapter adapter = new ProductAdapter(this, products, "ProductTable", dbhelper);
         fridgeRecyclerView.setHasFixedSize(true);
         fridgeRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         fridgeRecyclerView.setAdapter(adapter);
+
     }
 }

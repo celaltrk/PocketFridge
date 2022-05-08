@@ -120,7 +120,7 @@ public class RecipeHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Recipe> suggestRecipe(String str){
-        String query = "SELECT * FROM tbl_recipe WHERE SALARY LIKE %" + str + "%";
+        String query = "SELECT * FROM tbl_recipe WHERE ingredients LIKE %" + str + "%";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         ArrayList<Recipe> recipes = new ArrayList<>();

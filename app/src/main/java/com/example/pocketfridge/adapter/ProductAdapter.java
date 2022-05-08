@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pocketfridge.AddFoodActivity;
 import com.example.pocketfridge.MainActivity;
 import com.example.pocketfridge.R;
+import com.example.pocketfridge.attributes.ExpirationController;
 import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.fridgeItems.Product;
 import com.example.pocketfridge.ui.fridge.FridgeFragment;
@@ -35,12 +36,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private Fragment fr;
     private String tableName;
     private DBHelper helper;
+    private ExpirationController expController;
 
     public ProductAdapter(Fragment fr, ArrayList<Product> products, String tableName, DBHelper helper) {
         this.products = products;
         this.fr = fr;
         this.tableName = tableName;
         this.helper = helper;
+        expController = new ExpirationController();
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -60,6 +63,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         if (fr instanceof FridgeFragment) {
             if (product.getExpDateCalendar().before(Calendar.getInstance())) {
                 holder.textView.setTextColor(Color.rgb(153, 15, 2));
+            }
+            if (expController.isCloseToExpire(product)) {
+                holder.textView.setTextColor(Color.rgb(170, 0, 2));
+                helper.markAsClose(product.getId());
             }
         }
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {

@@ -35,7 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "ExpDate TEXT, " +
                 "Category TEXT, " +
                 "Type TEXT , " +
-                "IsLiquid BOOL, " +
+                "IsClosetoExpire BOOL, " +
                 "Quantity INTEGER) ";
 
         db.execSQL(createTable);
@@ -68,13 +68,14 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("ExpDate", product.getExpDate());
         cv.put("Category", product.getCategory());
         cv.put("Type", product.getType());
-        cv.put("isLiquid", product.isLiquid());
+        cv.put("IsClosetoExpire", 0);
         cv.put("Quantity", product.getQuantity());
 
         long insert = db.insert("ProductTable", null, cv);
         if(insert < 0) return false;
         else return true;
     }
+
 
     public boolean addToList(Product product){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -164,6 +165,49 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()) return true;
         else return false;
+    }
+    public boolean markAsClose(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE table SET IsClosetoExpire = 1 WHERE " +
+                "id = " + id;
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()) return true;
+        else return false;
+    }
+
+    public ArrayList<Product> getClosetoExpire(){
+        ArrayList<Product> products = new ArrayList<>();
+        String queryStr = "SELECT * FROM ProductTable WHERE IsClosetoExpire = 1";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryStr,null);
+
+        if (cursor.moveToFirst()) {
+
+            do {
+                String productName = cursor.getString(0);
+                int productId = cursor.getInt(1);
+                String productExpDate = cursor.getString(3);
+                String productCategory = cursor.getString(4);
+                String productType = cursor.getString(5);
+                Product pro;
+                try {
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Calendar.YEAR, Integer.parseInt(productExpDate.substring(6, 10)));
+                    cal.set(Calendar.MONTH, Integer.parseInt(productExpDate.substring(3, 5)) - 1);
+                    cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(productExpDate.substring(0, 2)));
+                    pro = new Product(productName, productCategory, productType, cal, productId);
+                } catch (NumberFormatException e) {
+                    pro = new Product(productName, productCategory, productType, null, productId);
+                }
+            }
+            while(cursor.moveToNext());
+        }
+        else{
+            //list empty or ended
+        }
+        cursor.close();
+        db.close();
+        return products;
     }
 
 }

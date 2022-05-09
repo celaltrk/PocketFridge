@@ -1,8 +1,6 @@
 package com.example.pocketfridge.adapter;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pocketfridge.AddFoodActivity;
 import com.example.pocketfridge.MainActivity;
 import com.example.pocketfridge.R;
 import com.example.pocketfridge.attributes.ExpirationController;
@@ -37,6 +34,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private String tableName;
     private DBHelper helper;
     private ExpirationController expController;
+    private boolean auto;
 
     public ProductAdapter(Fragment fr, ArrayList<Product> products, String tableName, DBHelper helper) {
         this.products = products;
@@ -74,7 +72,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Vibrator v = (Vibrator) fr.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && ((MainActivity)fr.getActivity()).isVibrationOn()) {
                     v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.EFFECT_DOUBLE_CLICK));
                 }
                 if (fr instanceof  ShoppingListFragment) {
@@ -90,14 +88,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             @Override
             public boolean onLongClick(View view) {
                 Vibrator v = (Vibrator) fr.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && ((MainActivity)fr.getActivity()).isVibrationOn()) {
                     v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
                 }
                 Toast.makeText(view.getContext(),"Product deleted: " + product.getName(),Toast.LENGTH_SHORT).show();
                 helper.deleteProduct(product.getId(),tableName);
                 if (fr instanceof FridgeFragment) {
                     ((FridgeFragment) fr).createFridge();
-                     helper.addToList(product);
+                    if(((MainActivity)fr.getActivity()).isAutoAddSwitchOn()) {
+                        System.out.println(((MainActivity)fr.getActivity()).isAutoAddSwitchOn());
+                        helper.addToList(product);
+                    }
                 }
                 if (fr instanceof ShoppingListFragment)
                     ((ShoppingListFragment) fr).createShoppingList();

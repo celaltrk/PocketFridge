@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 
@@ -28,6 +30,8 @@ public class FridgeFragment extends Fragment {
     RecyclerView fridgeRecyclerView;
     RecyclerView AllRecipesRecyclerView;
     TextView first;
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         fridgeViewModel = new ViewModelProvider(this).get(FridgeViewModel.class);
@@ -62,4 +66,5 @@ public class FridgeFragment extends Fragment {
         fridgeRecyclerView.setAdapter(adapter);
 
     }
+
 }

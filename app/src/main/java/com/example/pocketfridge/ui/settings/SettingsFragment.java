@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pocketfridge.AddShoppingListActivity;
-import com.example.pocketfridge.SettingsActivity;
+import com.example.pocketfridge.R;
 import com.example.pocketfridge.databinding.FragmentSettingsBinding;
 import com.example.pocketfridge.ui.settings.SettingsViewModel;
 
@@ -42,7 +44,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Intent intent = new Intent(this.getActivity(), SettingsActivity.class);
-        startActivity(intent);
+
     }
+
 }

@@ -35,9 +35,14 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
     final static String dmy = "dd/MM/yyyy";
     final static String[][] table = {
             {"No category","No type"},
-            {"1","1a","1b","1c","1d"},
-            {"2","2a","2b","2c","2d"},
-            {"3","3a","3b","3c","3d"},
+            {"Vegetable","Pumpkin","Pea","Tomato","Corn","Other"},
+            {"Fruit","Apple","Orange","Grapes","Pineapple","Other"},
+            {"Dairy product","Milk","Yogurt","Cheese","Other"},
+            {"Meat","Chicken","Fish","Lamb","Beef","Other"},
+            {"Bread","Bagel","Biscuit","Pizza","Croissant","Other"},
+            {"Cereal","Wheat","Rice","Lentil","Oats","Other"},
+            {"Snack","Chocolate","Chips","Cookies","Candy","Other"},
+            {"Beverage","Fizzy drink","Tea","Coffee","Milkshake","Other"}
     };
 
     @Override

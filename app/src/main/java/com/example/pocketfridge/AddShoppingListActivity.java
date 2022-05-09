@@ -92,4 +92,5 @@ public class AddShoppingListActivity extends AppCompatActivity implements Adapte
         DBHelper dbhelper = new DBHelper(AddShoppingListActivity.this);
         dbhelper.addToList(product);
     }
+
 }

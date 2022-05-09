@@ -26,9 +26,9 @@ public class Recipe implements Comparable<Recipe> {
 
     @Override
     public String toString() {
-        return
-                "instructions='" + instructions + '\'' +
-                ", ingredients='" + ingredients ;
+        return "Recipe: " + name +
+                "\n\nIngredients: \n\n" + ingredients +
+                "\n\nInstructions: \n\n" + instructions;
     }
 
     @Override

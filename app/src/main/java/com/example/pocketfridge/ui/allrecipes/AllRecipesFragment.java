@@ -38,7 +38,11 @@ public class AllRecipesFragment extends Fragment {
     }
     public void onStart() {
         super.onStart();
-        createAllRecipes();
+        try {
+            createAllRecipes();
+        } catch (Exception e) {
+            onStart();
+        }
     }
     public void createAllRecipes() {
         RecipeHelper dbhelper = new RecipeHelper(getActivity());

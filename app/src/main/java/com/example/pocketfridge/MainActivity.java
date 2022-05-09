@@ -1,5 +1,7 @@
 package com.example.pocketfridge;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -11,11 +13,14 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.pocketfridge.data.DBHelper;
+import com.example.pocketfridge.fridgeItems.Notification;
 import com.example.pocketfridge.fridgeItems.Product;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -27,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private boolean autoAddSwitchOn;
     private boolean vibrationOn;
+    private boolean notificationOn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         addManuallyButton = (FloatingActionButton) findViewById(R.id.addProductSL);
         autoAddSwitchOn = true;
         vibrationOn = true;
+        notificationOn = true;
         setContentView(binding.getRoot());
     }
     public void addManuallyOnClick(View view) {
@@ -84,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         return autoAddSwitchOn;
     }
     public boolean isVibrationOn() {return vibrationOn;}
+    public boolean isNotificationOn() {return notificationOn;}
 
     public void onAutoAddChanged(View view) {
         autoAddSwitchOn = ((Switch)findViewById(R.id.sw)).isChecked();
@@ -91,4 +99,8 @@ public class MainActivity extends AppCompatActivity {
     public void onVibrationChanged(View view) {
         vibrationOn = ((Switch)findViewById(R.id.sw2)).isChecked();
     }
+    public void onNotificationChanged(View view) {
+        notificationOn = ((Switch)findViewById(R.id.sw3)).isChecked();
+    }
+
 }

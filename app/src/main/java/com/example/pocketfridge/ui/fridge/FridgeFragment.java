@@ -15,10 +15,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pocketfridge.MainActivity;
 import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.R;
 import com.example.pocketfridge.adapter.ProductAdapter;
 import com.example.pocketfridge.databinding.FragmentFridgeBinding;
+import com.example.pocketfridge.fridgeItems.Notification;
 import com.example.pocketfridge.fridgeItems.Product;
 
 import java.util.ArrayList;
@@ -48,9 +50,15 @@ public class FridgeFragment extends Fragment {
         super.onStart();
         first = getView().findViewById(R.id.firstFR);
         createFridge();
+
     }
     public void createFridge() {
         DBHelper dbhelper = new DBHelper(getActivity());
+        ArrayList<Product> closeToExpire = dbhelper.getClosetoExpire();
+        if (closeToExpire.size() > 0 && ((MainActivity) getActivity()).isNotificationOn()) {
+            Notification notification = new Notification(getContext());
+            notification.createNotification(closeToExpire);
+        }
         ArrayList<Product> products = dbhelper.getAll_Fridge();
         if (products.size() == 0) {
             first.setVisibility(View.VISIBLE);

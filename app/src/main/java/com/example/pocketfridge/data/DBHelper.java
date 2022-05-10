@@ -40,6 +40,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL(createTable);
 
+        String createSettingsTable = "CREATE TABLE SettingTable" +
+                " (Notifications INTEGER, " +
+                "Vibration INTEGER, " +
+                "AutoAdd INTEGER) ";
+
+        db.execSQL(createSettingsTable);
+
         String createListDB = "CREATE TABLE Shopping_List (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, "+
                 "Name TEXT, " +
@@ -159,6 +166,28 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return shopList;
     }
+
+    public boolean getSetting(String settingName){
+        String queryStr = "SELECT" + settingName +" FROM Shopping_List";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryStr,null);
+        int wanted = 0;
+
+        if (cursor.moveToFirst()) {
+
+            do {
+            wanted = cursor.getInt(0);
+
+            }
+            while(cursor.moveToNext());
+        }
+        else{
+            //list empty or ended
+        }
+        cursor.close();
+        db.close();
+        return wanted == 1;
+    }
     public boolean deleteProduct(int id, String tableName) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + tableName + " WHERE id = " + id;
@@ -170,6 +199,15 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE ProductTable SET IsClosetoExpire = 1 WHERE " +
                 "id = " + id;
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()) return true;
+        else return false;
+    }
+
+    public boolean editSetting(String settingName, boolean b){
+        int i = (b == true) ? 1 : 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE SettingTable SET" + settingName+ " ="+ i ; // possible mistake
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()) return true;
         else return false;

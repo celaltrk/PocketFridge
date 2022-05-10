@@ -30,6 +30,7 @@ import com.example.pocketfridge.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton addManuallyButton;
     private ActivityMainBinding binding;
+    private DBHelper dbhelper;
     private boolean autoAddSwitchOn;
     private boolean vibrationOn;
     private boolean notificationOn;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbhelper = new DBHelper(MainActivity.this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -51,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
         // Initialize objects
         addManuallyButton = (FloatingActionButton) findViewById(R.id.addProductSL);
-        autoAddSwitchOn = true;
-        vibrationOn = true;
-        notificationOn = true;
+        autoAddSwitchOn = dbhelper.getSetting("AutoAdd");
+        vibrationOn = dbhelper.getSetting("Vibration");
+        notificationOn = dbhelper.getSetting("Notifications");
         setContentView(binding.getRoot());
     }
     public void addManuallyOnClick(View view) {
@@ -95,12 +97,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void onAutoAddChanged(View view) {
         autoAddSwitchOn = ((Switch)findViewById(R.id.sw)).isChecked();
+        dbhelper.editSetting("AutoAdd", autoAddSwitchOn);
     }
     public void onVibrationChanged(View view) {
         vibrationOn = ((Switch)findViewById(R.id.sw2)).isChecked();
+        dbhelper.editSetting("Vibration", vibrationOn);
     }
     public void onNotificationChanged(View view) {
         notificationOn = ((Switch)findViewById(R.id.sw3)).isChecked();
+        dbhelper.editSetting("Notifications", notificationOn);
     }
     public void autoAdd(Product p) {
         Intent intent = new Intent(this, AddFoodActivity.class);

@@ -34,7 +34,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private String tableName;
     private DBHelper helper;
     private ExpirationController expController;
-    private boolean auto;
 
     public ProductAdapter(Fragment fr, ArrayList<Product> products, String tableName, DBHelper helper) {
         this.products = products;
@@ -76,11 +75,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.EFFECT_DOUBLE_CLICK));
                 }
                 if (fr instanceof  ShoppingListFragment) {
-                    helper.addOne(product);
+                    if (((MainActivity)fr.getActivity()).isAutoAddSwitchOn())
+                        ((MainActivity)fr.getActivity()).autoAdd(product);
                     holder.textView.setPaintFlags(holder.textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     holder.textView.setTextColor(Color.rgb(153, 15, 2));
                     helper.deleteProduct(product.getId(),tableName);
                     Toast.makeText(view.getContext(),"Product bought: " + product.getName(),Toast.LENGTH_SHORT).show();
+                }
+                if (fr instanceof  FridgeFragment) {
+                    ((MainActivity)fr.getActivity()).autoAdd(product);
                 }
             }
         });

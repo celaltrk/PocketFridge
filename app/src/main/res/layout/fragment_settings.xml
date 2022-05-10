@@ -71,7 +71,7 @@
             android:layout_height="63dp"
             android:checked="true"
             android:onClick="onAutoAddChanged"
-            android:text="Auto-add to Shopping List"
+            android:text="Auto-add"
             android:textAlignment="inherit"
             android:textSize="18sp"
             tools:ignore="UseSwitchCompatOrMaterialXml" />

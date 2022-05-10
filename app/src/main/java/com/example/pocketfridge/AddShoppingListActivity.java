@@ -24,7 +24,6 @@ public class AddShoppingListActivity extends AppCompatActivity implements Adapte
     ArrayList<String> categories;
     ArrayList<String> types;
     String selectedType, selectedCategory, selectedName;
-    String dateStr;
     Calendar cal = Calendar.getInstance();
     final static String dmy = AddFoodActivity.dmy;
     final static String[][] table = AddFoodActivity.table;

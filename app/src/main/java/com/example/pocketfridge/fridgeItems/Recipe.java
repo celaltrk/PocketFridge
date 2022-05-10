@@ -30,7 +30,6 @@ public class Recipe implements Comparable<Recipe> {
                 "\n\nIngredients: \n\n" + ingredients +
                 "\n\nInstructions: \n\n" + instructions;
     }
-
     @Override
     public int compareTo(Recipe recipe) {
         return this.name.compareTo(recipe.name);

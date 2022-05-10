@@ -102,5 +102,11 @@ public class MainActivity extends AppCompatActivity {
     public void onNotificationChanged(View view) {
         notificationOn = ((Switch)findViewById(R.id.sw3)).isChecked();
     }
-
+    public void autoAdd(Product p) {
+        Intent intent = new Intent(this, AddFoodActivity.class);
+        intent.putExtra("name",p.getName());
+        intent.putExtra("category",p.getCategory());
+        intent.putExtra("type",p.getType());
+        startActivity(intent);
+    }
 }

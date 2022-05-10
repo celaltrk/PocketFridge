@@ -52,8 +52,9 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
         nameInput = (EditText) findViewById(R.id.nameInput);
         categorySpinner = (Spinner) findViewById(R.id.categoryInput);
         typeSpinner = (Spinner) findViewById(R.id.typeInput);
-        createCategories();
+        getExtras();
         datePick();
+
     }
     private void createCategories() {
         categories = new ArrayList<String>();
@@ -88,7 +89,10 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         selectedCategory = categorySpinner.getSelectedItem().toString();
-        createTypes(i);
+        Intent intent = getIntent();
+        if (intent.getStringExtra("category") == null) {
+            createTypes(i);
+        }
     }
 
     @Override
@@ -131,6 +135,28 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
         }
         DBHelper dbhelper = new DBHelper(AddFoodActivity.this);
         dbhelper.addOne(product);
+    }
+    public void getExtras() {
+        Intent i = getIntent();
+        if (i.getStringExtra("category") == null) {
+            createCategories();
+        }
+        else {
+            nameInput.setText(i.getStringExtra("name"));
+            selectedCategory = i.getStringExtra("category");
+            selectedType = i.getStringExtra("type");
+            categories = new ArrayList<String>();
+            categories.add(selectedCategory);
+            categorySpinner.setOnItemSelectedListener(this);
+            ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
+            ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            categorySpinner.setAdapter(ad);
+            types = new ArrayList<String>();
+            types.add(selectedType);
+            ArrayAdapter ad2 = new ArrayAdapter(this, android.R.layout.simple_spinner_item, types);
+            ad2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            typeSpinner.setAdapter(ad2);
+        }
     }
 
 }

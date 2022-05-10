@@ -14,7 +14,7 @@
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="100dp"
         android:clickable="true"
-        android:onClick="addManuallyOnClick"
+        android:onClick="addFROnClick"
         android:src="@android:drawable/ic_input_add"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"

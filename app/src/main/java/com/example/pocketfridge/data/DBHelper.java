@@ -1,26 +1,18 @@
 package com.example.pocketfridge.data;
 
-import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-
 import com.example.pocketfridge.fridgeItems.Product;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 public class DBHelper extends SQLiteOpenHelper {
-
-    Calendar cal;
     SimpleDateFormat dateFormat;
     public DBHelper(@Nullable Context context) {
         super(context, "products.db", null, 1);
@@ -74,12 +66,12 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
 
         cv.put("Name", product.getName());
-        cv.put("IsExpirable", product.isExpirable());
+        cv.put("IsExpirable", true);
         cv.put("ExpDate", product.getExpDate());
         cv.put("Category", product.getCategory());
         cv.put("Type", product.getType());
         cv.put("IsClosetoExpire", 0);
-        cv.put("Quantity", product.getQuantity());
+        cv.put("Quantity", 0);
 
         long insert = db.insert("ProductTable", null, cv);
         if(insert < 0) return false;
@@ -94,7 +86,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("Name", product.getName());
         cv.put("Category", product.getCategory());
         cv.put("Type", product.getType());
-        String strDate= product.getExpDate();
+        String strDate = product.getExpDate();
         cv.put("addingDate", strDate);
         cv.put("isBought" , 0);
 

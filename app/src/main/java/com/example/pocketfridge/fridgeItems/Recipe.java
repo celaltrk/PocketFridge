@@ -1,11 +1,9 @@
 package com.example.pocketfridge.fridgeItems;
 
-import java.util.ArrayList;
-
 public class Recipe implements Comparable<Recipe> {
-    String name;
-    String instructions;
-    String ingredients;
+    private String name;
+    private String instructions;
+    private String ingredients;
     public Recipe(String name,String instructions,String ingredients) {
         this.name = name;
         this.ingredients = ingredients;
@@ -15,20 +13,6 @@ public class Recipe implements Comparable<Recipe> {
     public String getName() {
         return name;
     }
-
-    public String getIngredients() {
-        return ingredients;
-    }
-    public String getInstructions() {
-        return instructions;
-    }
-    public void setIngredients(String ingredients) {
-        this.ingredients = ingredients;
-    }
-    public void setInstructions(String instructions) {
-        this.instructions = instructions;
-    }
-
     @Override
     public String toString() {
         return "Recipe: " + name +

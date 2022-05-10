@@ -5,10 +5,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.example.pocketfridge.fridgeItems.Product;
 import com.example.pocketfridge.fridgeItems.Recipe;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,22 +14,19 @@ import java.util.ArrayList;
 
 public class RecipeHelper extends SQLiteOpenHelper {
     private static String DBPath;
-    private static String DBName = "recipes.db";
-    private Context mContext;
-    private SQLiteDatabase myDataBase;
+    private static final String DB_NAME = "recipes.db";
+    private final Context mContext;
 
     public RecipeHelper(Context context){
-        super(context, DBName,null, 1);
+        super(context, DB_NAME,null, 1);
         DBPath = context.getApplicationInfo().dataDir+"/databases/";
         mContext = context;
 
     }
-
-
     private boolean checkDB(){
         SQLiteDatabase tempDB = null;
         try{
-            String path = DBPath + DBName;
+            String path = DBPath + DB_NAME;
             tempDB = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
         }
         catch (Exception e){
@@ -45,9 +39,9 @@ public class RecipeHelper extends SQLiteOpenHelper {
     }
     private void copyDataBase() throws IOException {
 
-        InputStream myInput = mContext.getAssets().open(DBName);
+        InputStream myInput = mContext.getAssets().open(DB_NAME);
 
-        String outFileName = DBPath + DBName;
+        String outFileName = DBPath + DB_NAME;
 
         OutputStream myOutput = new FileOutputStream(outFileName);
 
@@ -65,8 +59,8 @@ public class RecipeHelper extends SQLiteOpenHelper {
 
     public void openDataBase() throws SQLException {
 
-        String myPath = DBPath + DBName;
-        myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+        String myPath = DBPath + DB_NAME;
+        SQLiteDatabase myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
 
     }
 
@@ -152,9 +146,7 @@ public class RecipeHelper extends SQLiteOpenHelper {
         db.close();
         return recipes;
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
     }
 }

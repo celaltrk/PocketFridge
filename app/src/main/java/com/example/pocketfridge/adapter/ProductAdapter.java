@@ -1,11 +1,7 @@
 package com.example.pocketfridge.adapter;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Build;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,29 +14,34 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocketfridge.MainActivity;
 import com.example.pocketfridge.R;
-import com.example.pocketfridge.attributes.ExpirationController;
+import com.example.pocketfridge.attributes.CreateList;
+import com.example.pocketfridge.attributes.Expiration;
+import com.example.pocketfridge.attributes.Vibration;
 import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.fridgeItems.Product;
 import com.example.pocketfridge.ui.fridge.FridgeFragment;
 import com.example.pocketfridge.ui.shoppinglist.ShoppingListFragment;
-
 import java.util.ArrayList;
-import java.util.Calendar;
+
 
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
     private ArrayList<Product> products;
     private Fragment fr;
+    private MainActivity act;
     private String tableName;
     private DBHelper helper;
-    private ExpirationController expController;
+    private Expiration expiration;
+    private Vibration v;
 
     public ProductAdapter(Fragment fr, ArrayList<Product> products, String tableName, DBHelper helper) {
         this.products = products;
         this.fr = fr;
         this.tableName = tableName;
         this.helper = helper;
-        expController = new ExpirationController();
+        this.act = (MainActivity) fr.getActivity();
+        v = new Vibration(fr.getActivity(),100);
+        expiration = new Expiration();
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -52,59 +53,55 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        // Set the objects
         final Product product = products.get(position);
-        holder.textView.setText(product.toString());
+        final TextView text = holder.textView;
+        text.setText(product.toString());
+
+        // Dynamic sizing
         ViewGroup.LayoutParams params = holder.relativeLayout.getLayoutParams();
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         holder.relativeLayout.setLayoutParams(params);
+
+        // Detect and mark expired products in the fridge
         if (fr instanceof FridgeFragment) {
-            if (product.getExpDateCalendar().before(Calendar.getInstance())) {
-                holder.textView.setTextColor(Color.rgb(150, 15, 2));
+            if (expiration.isExpired(product)) {
+                text.setTextColor(Color.rgb(255, 15, 2));
             }
-            if (expController.isCloseToExpire(product)) {
-                if (!(product.getExpDateCalendar().before(Calendar.getInstance())))
-                holder.textView.setTextColor(Color.rgb(100, 15, 2));
+            else if (expiration.isCloseToExpire(product)) {
+                text.setTextColor(Color.rgb(100, 15, 2));
                 helper.markAsClose(product.getId());
             }
         }
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Vibrator v = (Vibrator) fr.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && ((MainActivity)fr.getActivity()).isVibrationOn()) {
-                    v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.EFFECT_DOUBLE_CLICK));
-                }
-                if (fr instanceof  ShoppingListFragment) {
-                    if (((MainActivity)fr.getActivity()).isAutoAddSwitchOn())
-                        ((MainActivity)fr.getActivity()).autoAdd(product);
-                    holder.textView.setPaintFlags(holder.textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    holder.textView.setTextColor(Color.rgb(153, 15, 2));
+                v.vibrate();
+                // Delete item in the SL and add it to the fridge if the setting is enabled
+                if (fr instanceof ShoppingListFragment) {
+                    if (act.isAutoAddSwitchOn())
+                        act.autoAdd(product);
+                    text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    text.setTextColor(Color.rgb(153, 15, 2));
                     helper.deleteProduct(product.getId(),tableName);
                     Toast.makeText(view.getContext(),"Product bought: " + product.getName(),Toast.LENGTH_SHORT).show();
-                }
-                if (fr instanceof  FridgeFragment) {
-                    ((MainActivity)fr.getActivity()).autoAdd(product);
                 }
             }
         });
         holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Vibrator v = (Vibrator) fr.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && ((MainActivity)fr.getActivity()).isVibrationOn()) {
-                    v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-                }
-                Toast.makeText(view.getContext(),"Product deleted: " + product.getName(),Toast.LENGTH_SHORT).show();
+                v.vibrate();
+                // Delete the product on long click
                 helper.deleteProduct(product.getId(),tableName);
+                // Auto-add to the SL
                 if (fr instanceof FridgeFragment) {
-                    ((FridgeFragment) fr).createFridge();
-                    if(((MainActivity)fr.getActivity()).isAutoAddSwitchOn()) {
-                        System.out.println(((MainActivity)fr.getActivity()).isAutoAddSwitchOn());
+                    if(act.isAutoAddSwitchOn()) {
                         helper.addToList(product);
                     }
                 }
-                if (fr instanceof ShoppingListFragment)
-                    ((ShoppingListFragment) fr).createShoppingList();
+                ((CreateList) fr).createList(); // To update the lists after removal
+                Toast.makeText(view.getContext(),"Product deleted: " + product.getName(),Toast.LENGTH_SHORT).show();
               return true;
             }
         });

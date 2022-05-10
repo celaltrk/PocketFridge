@@ -1,26 +1,17 @@
 package com.example.pocketfridge;
-
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.pocketfridge.attributes.Vibration;
 import com.example.pocketfridge.data.DBHelper;
-import com.example.pocketfridge.fridgeItems.Notification;
 import com.example.pocketfridge.fridgeItems.Product;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -34,15 +25,12 @@ public class MainActivity extends AppCompatActivity {
     private boolean autoAddSwitchOn;
     private boolean vibrationOn;
     private boolean notificationOn;
-
+    private Vibration v;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbhelper = new DBHelper(MainActivity.this);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -52,14 +40,17 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
         // Initialize objects
+        dbhelper = new DBHelper(MainActivity.this);
+        v = new Vibration(this,500);
         addManuallyButton = (FloatingActionButton) findViewById(R.id.addProductSL);
         autoAddSwitchOn = dbhelper.getSetting("AutoAdd");
         vibrationOn = dbhelper.getSetting("Vibration");
         notificationOn = dbhelper.getSetting("Notifications");
         setContentView(binding.getRoot());
     }
-    public void addManuallyOnClick(View view) {
+    public void addFROnClick(View view) {
         Intent intent = new Intent(this, AddFoodActivity.class);
         startActivity(intent);
     }
@@ -68,28 +59,20 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void resetFridge(View view) {
-        DBHelper helper = new DBHelper(this);
-        for (Product pro : helper.getAll_Fridge()) {
-            helper.deleteProduct(pro.getId(),"ProductTable");
+        for (Product pro : dbhelper.getAll_Fridge()) {
+            dbhelper.deleteProduct(pro.getId(),"ProductTable");
         }
         Toast.makeText(getApplicationContext(), "Fridge has been emptied", Toast.LENGTH_SHORT).show();
-        Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && vibrationOn) {
-            v.vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.EFFECT_HEAVY_CLICK));
-        }
-
-
-    }public void resetSL(View view) {
-        DBHelper helper = new DBHelper(this);
-        for (Product pro : helper.getAll_ShoppingList()) {
-            helper.deleteProduct(pro.getId(),"Shopping_List");
+        v.vibrate();
+    }
+    public void resetSL(View view) {
+        for (Product pro : dbhelper.getAll_ShoppingList()) {
+            dbhelper.deleteProduct(pro.getId(),"Shopping_List");
         }
         Toast.makeText(getApplicationContext(), "Shopping list has been emptied", Toast.LENGTH_SHORT).show();
-        Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && vibrationOn) {
-            v.vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.EFFECT_HEAVY_CLICK));
-        }
+        v.vibrate();
     }
+
     public boolean isAutoAddSwitchOn() {
         return autoAddSwitchOn;
     }

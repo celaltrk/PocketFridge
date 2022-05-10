@@ -4,18 +4,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocketfridge.R;
-import com.example.pocketfridge.adapter.ProductAdapter;
 import com.example.pocketfridge.adapter.RecipeAdapter;
+import com.example.pocketfridge.attributes.CreateList;
 import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.data.RecipeHelper;
 import com.example.pocketfridge.databinding.FragmentZerowastageBinding;
@@ -23,18 +21,14 @@ import com.example.pocketfridge.fridgeItems.Product;
 import com.example.pocketfridge.fridgeItems.Recipe;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Locale;
 
-public class ZeroWastageFragment extends Fragment {
-    private ZeroWastageViewModel zeroWastageViewModel;
+public class ZeroWastageFragment extends Fragment implements CreateList {
     private FragmentZerowastageBinding binding;
-    RecyclerView zwRecyclerView;
-    TextView first;
-    RecipeHelper recipeHelper;
+    private RecyclerView zwRecyclerView;
+    private TextView first;
+    private RecipeHelper recipeHelper;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        zeroWastageViewModel = new ViewModelProvider(this).get(ZeroWastageViewModel.class);
         binding = FragmentZerowastageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         return root;
@@ -48,9 +42,10 @@ public class ZeroWastageFragment extends Fragment {
         super.onStart();
         first = getView().findViewById(R.id.firstZW);
         recipeHelper = new RecipeHelper(getActivity());
-        createZW();
+        createList();
     }
-    public void createZW() {
+    @Override
+    public void createList() {
         ArrayList<Recipe> suggestedRecipes = suggestRecipes();
         if (suggestedRecipes.size() == 0)
             first.setVisibility(View.VISIBLE);
@@ -87,5 +82,4 @@ public class ZeroWastageFragment extends Fragment {
         }
         return suggested;
     }
-
 }

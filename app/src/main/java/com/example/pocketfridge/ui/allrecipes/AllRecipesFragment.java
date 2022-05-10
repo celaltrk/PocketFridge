@@ -4,29 +4,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.pocketfridge.adapter.RecipeAdapter;
 import com.example.pocketfridge.R;
+import com.example.pocketfridge.attributes.CreateList;
 import com.example.pocketfridge.data.RecipeHelper;
 import com.example.pocketfridge.fridgeItems.Recipe;
 import com.example.pocketfridge.databinding.FragmentAllrecipesBinding;
-
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class AllRecipesFragment extends Fragment {
-    private AllRecipesViewModel allRecipesViewModel;
+public class AllRecipesFragment extends Fragment implements CreateList {
     private FragmentAllrecipesBinding binding;
-    RecyclerView allrecipesRecyclerView;
+    private RecyclerView allRecipesRecyclerView;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        allRecipesViewModel = new ViewModelProvider(this).get(AllRecipesViewModel.class);
         binding = FragmentAllrecipesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         return root;
@@ -36,24 +31,29 @@ public class AllRecipesFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+    // For first use, the app should start twice to create the database
     public void onStart() {
         super.onStart();
         try {
-            createAllRecipes();
+            createList();
         } catch (Exception e) {
             onStart();
         }
     }
-    public void createAllRecipes() {
-        RecipeHelper dbhelper = new RecipeHelper(getActivity());
-        dbhelper.createDB();
-        ArrayList<Recipe> recipes = dbhelper.getAllRecipes();
+    @Override
+    public void createList() {
+        // Creates the list
+        RecipeHelper helper = new RecipeHelper(getActivity());
+        helper.createDB();
+        ArrayList<Recipe> recipes = helper.getAllRecipes();
 
+        // Sorts by name
+        Collections.sort(recipes);
 
-        allrecipesRecyclerView = (RecyclerView) getView().findViewById((R.id.allrecipes_recyclerView));
-        RecipeAdapter adapter = new RecipeAdapter(this, recipes, "tbl_recipe", dbhelper);
-        allrecipesRecyclerView.setHasFixedSize(false);
-        allrecipesRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        allrecipesRecyclerView.setAdapter(adapter);
+        allRecipesRecyclerView = (RecyclerView) getView().findViewById((R.id.allrecipes_recyclerView));
+        RecipeAdapter adapter = new RecipeAdapter(this, recipes, "tbl_recipe", helper);
+        allRecipesRecyclerView.setHasFixedSize(false);
+        allRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        allRecipesRecyclerView.setAdapter(adapter);
     }
 }

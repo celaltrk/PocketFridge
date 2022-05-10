@@ -2,24 +2,28 @@ package com.example.pocketfridge.fridgeItems;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class Product implements Comparable<Product> {
-    Calendar expDate;
-    String name;
-    String category;
-    String type;
-    SimpleDateFormat dateFormat;
-    final String dmy = "dd/MM/yyyy";
-    public Product(String name, String category, String type, Calendar expDate) {
-        dateFormat= new SimpleDateFormat(dmy, Locale.UK);
+    private Calendar expDate;
+    private String name;
+    private String category;
+    private int id;
+    private String type;
+    private SimpleDateFormat dateFormat;
+    private final String dmy = "dd/MM/yyyy";
+    public Product(String name, String category, String type, Calendar expDate,int id) {
+        dateFormat = new SimpleDateFormat(dmy, Locale.UK);
+        this.id = id;
         this.expDate = expDate;
         this.name = name;
         this.type = type;
         this.category = category;
         if (expDate == null)
             this.expDate = Calendar.getInstance();
+    }
+    public Product(String name) {
+        this.name = name;
     }
 
     public String getName() {
@@ -46,26 +50,14 @@ public class Product implements Comparable<Product> {
     }
     @Override
     public String toString() {
-        return name + "\nExpiration Date: " + getExpDate();
+        return name  + "\nCategory: " + getCategory() + "\nType: " + getType() + "\nDate: " + getExpDate();
     }
-
-
-    public Boolean isExpirable() {
-        return true;
+    public int getId() {
+        return id;
     }
-
     public String getType() {
         return type;
     }
-
-    public Boolean isLiquid() {
-        return null;
-    }
-
-    public int getQuantity() {
-        return 0;
-    }
-
     public String getCategory() {
         return category;
     }

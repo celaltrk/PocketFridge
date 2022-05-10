@@ -5,39 +5,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.pocketfridge.R;
-import com.example.pocketfridge.adapter.ItemAdapter;
+import com.example.pocketfridge.adapter.ProductAdapter;
+import com.example.pocketfridge.attributes.CreateList;
 import com.example.pocketfridge.data.DBHelper;
 import com.example.pocketfridge.databinding.FragmentShoppinglistBinding;
 import com.example.pocketfridge.fridgeItems.Product;
-
 import java.util.ArrayList;
-import java.util.Collections;
-
-public class ShoppingListFragment extends Fragment {
-
-    private ShoppingListViewModel shoppingListViewModel;
+public class ShoppingListFragment extends Fragment implements CreateList {
     private FragmentShoppinglistBinding binding;
-    RecyclerView fridgeRecyclerView;
+    private RecyclerView shoppingListRecyclerView;
+    private DBHelper dbhelper;
+    private TextView first;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        shoppingListViewModel =
-                new ViewModelProvider(this).get(ShoppingListViewModel.class);
         binding = FragmentShoppinglistBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
         return root;
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -47,17 +37,23 @@ public class ShoppingListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        createSL();
+        first = getView().findViewById(R.id.firstSL);
+        createList();
     }
-
-    public void createSL() {
-        ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product("sample","a","a1",null));
-        Collections.sort(products);
-        fridgeRecyclerView = (RecyclerView) getView().findViewById((R.id.SL_recyclerView));
-        ItemAdapter adapter = new ItemAdapter(products);
-        fridgeRecyclerView.setHasFixedSize(true);
-        fridgeRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        fridgeRecyclerView.setAdapter(adapter);
+    @Override
+    public void createList() {
+        dbhelper = new DBHelper(getActivity());
+        ArrayList<Product> items = dbhelper.getAll_ShoppingList();
+        if (items.size() == 0) {
+            first.setVisibility(View.VISIBLE);
+        }
+        else {
+            first.setVisibility(View.INVISIBLE);
+        }
+        shoppingListRecyclerView = (RecyclerView) getView().findViewById((R.id.SL_recyclerView));
+        ProductAdapter adapter = new ProductAdapter(this,items,"Shopping_List", dbhelper);
+        shoppingListRecyclerView.setHasFixedSize(true);
+        shoppingListRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        shoppingListRecyclerView.setAdapter(adapter);
     }
 }

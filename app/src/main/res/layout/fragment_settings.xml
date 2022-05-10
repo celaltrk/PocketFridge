@@ -4,4 +4,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.settings.SettingsFragment"/>
+    tools:context=".ui.settings.SettingsFragment">
+
+    <Button
+        android:id="@+id/resetFridge"
+        android:layout_width="210dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="400dp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:onClick="resetFridge"
+        android:text="RESET FRIDGE"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/resetSL"
+        android:layout_width="210dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:onClick="resetSL"
+        android:text="RESET SHOPPING LIST"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resetFridge" />
+
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="192dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.004">
+
+        <Switch
+            android:id="@+id/sw3"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:checked="true"
+            android:onClick="onNotificationChanged"
+            android:text="Notifications"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <Switch
+            android:id="@+id/sw2"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:checked="true"
+            android:onClick="onVibrationChanged"
+            android:text="Vibration"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <Switch
+            android:id="@+id/sw"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:checked="true"
+            android:onClick="onAutoAddChanged"
+            android:text="Auto-add"
+            android:textAlignment="inherit"
+            android:textSize="18sp"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

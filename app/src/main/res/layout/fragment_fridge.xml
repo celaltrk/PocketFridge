@@ -14,7 +14,7 @@
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="100dp"
         android:clickable="true"
-        android:onClick="addManuallyOnClick"
+        android:onClick="addFROnClick"
         android:src="@android:drawable/ic_input_add"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,6 +31,19 @@
         android:scrollbars="vertical"
         android:theme="@style/Theme.PocketFridge"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/firstFR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add your first product now!"
+        android:textSize="25sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

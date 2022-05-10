@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="?android:attr/listPreferredItemHeightLarge"
     android:background="@drawable/border">
-
     <TextView
-        android:id="@+id/item_in_fridge"
+        android:id="@+id/item_in_recipes"
         android:layout_width="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
+        android:singleLine="false"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:textSize="16sp" />

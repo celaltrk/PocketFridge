@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pocketfridge.AddShoppingListActivity;
+import com.example.pocketfridge.MainActivity;
 import com.example.pocketfridge.R;
 import com.example.pocketfridge.databinding.FragmentSettingsBinding;
 import com.example.pocketfridge.ui.settings.SettingsViewModel;
@@ -44,7 +45,9 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
+        ((Switch)getActivity().findViewById(R.id.sw3)).setChecked(((MainActivity)getActivity()).isNotificationOn());
+        ((Switch)getActivity().findViewById(R.id.sw2)).setChecked(((MainActivity)getActivity()).isVibrationOn());
+        ((Switch)getActivity().findViewById(R.id.sw)).setChecked(((MainActivity)getActivity()).isAutoAddSwitchOn());
     }
 
 }

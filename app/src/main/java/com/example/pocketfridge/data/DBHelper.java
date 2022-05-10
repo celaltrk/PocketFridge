@@ -56,6 +56,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 "isBought INTEGER) " ;
 
         db.execSQL(createListDB);
+
+        String setSettings = "INSERT INTO SettingTable (Notifications,Vibration,AutoAdd) VALUES (1,1,1)";
+        db.execSQL(setSettings);
     }
 
     @Override
@@ -168,7 +171,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public boolean getSetting(String settingName){
-        String queryStr = "SELECT" + settingName +" FROM Shopping_List";
+        String queryStr = "SELECT " + settingName +" FROM SettingTable";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryStr,null);
         int wanted = 0;
@@ -207,7 +210,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean editSetting(String settingName, boolean b){
         int i = (b == true) ? 1 : 0;
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "UPDATE SettingTable SET" + settingName+ " ="+ i ; // possible mistake
+        String query = "UPDATE SettingTable SET " + settingName+ " ="+ i ; // possible mistake
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()) return true;
         else return false;

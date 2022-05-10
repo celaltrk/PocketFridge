@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dbhelper = new DBHelper(MainActivity.this);
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -114,4 +115,5 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("type",p.getType());
         startActivity(intent);
     }
+
 }

@@ -11,6 +11,11 @@ public class Recipe implements Comparable<Recipe> {
         this.ingredients = ingredients;
         this.instructions = instructions;
     }
+
+    public String getName() {
+        return name;
+    }
+
     public String getIngredients() {
         return ingredients;
     }

@@ -4,5 +4,4 @@ CS 102 - Section 3 - Group 3A.<br>
 TA: Hakan Türkmenoğlu.<br>
 
 <h1> How to install </h1> <br>
-Go the the directory: PocketFridge\app\build\intermediates\apk\debug
-Here, you can find "app-debug.apk" and install it on your Android device.
+You can find "pocketfridge.apk" on the PocketFridge folder and install it on your Android device.

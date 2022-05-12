@@ -7,6 +7,8 @@ TA: Hakan Türkmenoğlu.<br>
 You can find "app-debug.apk" on the PocketFridge folder and install it on your Android device, or click the text below. <br>
 <h1> <a href="https://github.com/celaltrk/PocketFridge/raw/main/app-debug.apk">DOWNLOAD APP</a></h1> <br>
   
-</form>
+
 Here is the link of the GitHub repository:
-<link> https://github.com/celaltrk/PocketFridge <link>
+<link> https://github.com/celaltrk/PocketFridge </link> <br>
+The Wiki Page including the personal logs: <br>
+<link> https://github.com/celaltrk/PocketFridge/wiki </link>
